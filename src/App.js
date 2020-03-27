@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+
+import { BrowserRouter as Router, Route,Switch } from "react-router-dom";
+import routes from "./routes";
+import withTracker from "./withTracker";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./shards-dashboard/styles/shards-dashboards.1.1.0.min.css";
+import 'rc-time-picker/assets/index.css';
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+      <Switch>
+        {routes.map((route, index) => {
+          return (
+            <PrivateRoute
+              key={index}
+              path={route.path}
+              exact={route.exact}
+              roles={route.roles}
+              component={withTracker(props => {
+                return (
+                  <route.layout>
+                    {route.component && <route.component {...props}/>}
+                  </route.layout>
+                );
+              })}
+            />
+          );
+        })}
+        </Switch>
+      </div>
+    </Router>
   );
 }
+
 
 export default App;
