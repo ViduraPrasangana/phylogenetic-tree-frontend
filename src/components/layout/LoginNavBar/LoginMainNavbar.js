@@ -2,34 +2,35 @@ import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { Container, Navbar, NavbarBrand } from "shards-react";
+import { Link } from "react-router-dom";
 
 const LoginMainNavbar = ({ layout, stickyTop }) => {
   const classes = classNames(
     "main-navbar",
-    "full-width",
-    "sticky-top"
   );
 
   return (
     <div className={classes}>
       <Navbar
+      className="align-content-between flex-md-nowrap p-0"
         type="light"
         style={{ backgroundColor: "#ffffff00" }}
       >
         <NavbarBrand
-          className="w-100 mr-0"
-          href="#"
+          className="m-0 p-0"
+          tag={Link} to="/"
           style={{ lineHeight: "25px" }}
         >
-          <div className="d-table m-auto">
+          <div className="pl-5 align-items-center">
             <img
               id="main-logo"
               className="d-inline-block align-top mr-1"
-              style={{ maxWidth: "25px" }}
-              src={require("../../../logo.svg")}
-              alt="Airline logo"
+              style={{ maxWidth: "40px" }}
+              src={require("../../../assets/images/logo-dark.png")}
+              alt="DNA logo"
+              
             />
-            <span className="d-none d-md-inline ml-1">Airlines</span>
+            <h4 className="d-none d-md-inline ml-1 text-black"><b>DNA</b></h4>
           </div>
         </NavbarBrand>
       </Navbar>

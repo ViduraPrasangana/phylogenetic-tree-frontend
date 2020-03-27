@@ -67,9 +67,6 @@ class Login extends Component {
               </Alert>
             </Row>
             <Row form className="justify-content-end">
-              <Button outline theme="primary" ou className="mb-3 mr-3">
-                Login as Guest
-              </Button>
               <Button
                 theme="primary"
                 className="mb-3"

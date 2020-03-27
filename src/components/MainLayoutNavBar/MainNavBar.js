@@ -39,14 +39,13 @@ class MainNavBar extends Component {
         <Navbar
           className="align-content-between flex-md-nowrap p-0"
           type="light"
-          // style={{ backgroundColor: "#ffffff00" }}
+          style={{ backgroundColor: "#ffffff00" }}
         >
-          {/* <NavbarBrand
-            className="w-50 mr-0"
-            tag={Link}
-            to="/"
-            // style={{ lineHeight: "60px" }}
-          > */}
+         <NavbarBrand
+          className="m-0 p-0"
+          tag={Link} to="/"
+          style={{ lineHeight: "25px" }}
+        >
             <div className="pl-5 align-items-center">
               <img
                 id="main-logo"
@@ -58,7 +57,7 @@ class MainNavBar extends Component {
 
               <h4 className="d-none d-md-inline ml-1 bold text-white"><b>DNA</b></h4>
             </div>
-          {/* </NavbarBrand> */}
+          </NavbarBrand>
 
           {/* <a
             className="toggle-sidebar d-sm-inline d-md-none d-lg-none"
