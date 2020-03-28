@@ -15,16 +15,11 @@ import {
   Alert
 } from "shards-react";
 
-import { getNames } from "country-list";
 import SimpleReactValidator from "simple-react-validator";
 import moment from "moment";
 import { quarterTrans, fullTrans } from "../data/constants";
 import Axios from "axios";
 import config from "../data/config";
-
-const now = new Date();
-const time = new Date();
-time.setFullYear(now.getFullYear() - 18);
 
 export default class Register extends Component {
   state = {
@@ -33,10 +28,6 @@ export default class Register extends Component {
     lastName: null,
     password: null,
     confirmPassword: null,
-    country: null,
-    gender: null,
-    nic: null,
-    date: time,
     isErrorDate: false,
     errorDate: "You should be 18+",
     registered: null,
@@ -79,47 +70,35 @@ export default class Register extends Component {
       )
       .catch(err => {
         console.log(err.response.data.error.message);
-        this.setState({ registered: false, message:err.response.data.error.message });
+        this.setState({
+          registered: false,
+          message: err.response.data.error.message
+        });
       });
   };
   validate() {
     if (this.validator.allValid()) {
-      if (moment(this.state.date) > moment(time)) {
-        this.setState({
-          date: time
-        });
-      } else {
-        return true;
-      }
+      return true;
     } else {
       this.validator.showMessages();
       this.forceUpdate();
     }
-    return false;
+	return false;
   }
 
-  validateDate = () => {
-    if (moment(this.state.date) > moment(time)) {
-      this.setState({
-        date: time
-      });
-    }
-  };
+  
 
   render() {
     const {
       lastName,
       confirmPassword,
-      date,
       email,
       firstName,
       password,
-      gender,
-      nic,
       registered,
       message
     } = this.state;
-    this.validateDate();
+
     const validFirstName = this.validator.message(
       "firstName",
       firstName,
@@ -142,9 +121,6 @@ export default class Register extends Component {
       "required"
     );
     const passEquals = password === confirmPassword;
-    const validGender = this.validator.message("gender", gender, "required");
-    console.log(this.state.nic);
-    // const validFirstName =  this.validator.message('firstName', this.state.firstName, 'required|alpha')
     return (
       <Card small className="mb-4 col-7" style={quarterTrans}>
         <CardHeader className="border-bottom" style={fullTrans}>
@@ -220,74 +196,10 @@ export default class Register extends Component {
               />
             </Row>
 
-            <Row form className="form-group">
-              <Col md className="pl-0">
-                <FormSelect
-                  onChange={e => {
-                    this.setState({
-                      gender: e.target.value
-                    });
-                  }}
-                  invalid={validGender}
-                  style={quarterTrans}
-                >
-                  <option selected disabled value="">
-                    Gender
-                  </option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </FormSelect>
-              </Col>
-              <Col>
-                <DatePicker
-                  placeholderText="Birth Date"
-                  selected={date}
-                  className=""
-                  style={quarterTrans}
-                  onChange={e => {
-                    this.setState({
-                      date: new Date(e)
-                    });
-                  }}
-                />
-              </Col>
-            </Row>
-            <Row form className="pb-3">
-              <FormInput
-                id="nic"
-                placeholder="NIC"
-                value={nic}
-                style={quarterTrans}
-                onChange={e => {
-                  this.setState({
-                    nic: e.target.value
-                  });
-                }}
-              />
-            </Row>
-            <Row form>
-              <FormSelect
-                style={quarterTrans}
-                onChange={e => {
-                  this.setState({
-                    country: e.target.value
-                  });
-                }}
-              >
-                <option selected disabled value="">
-                  Choose your Country
-                </option>
-                {getNames().map((country, index) => (
-                  <option key={index} value={country}>
-                    {country}
-                  </option>
-                ))}
-              </FormSelect>
-            </Row>
             <Row form className="pt-2 pb-0">
               <Alert
                 dismissible={true}
-                style={{width:"100%"}}
+                style={{ width: "100%" }}
                 open={registered !== null}
                 theme={registered === false ? "danger" : "success"}
               >
