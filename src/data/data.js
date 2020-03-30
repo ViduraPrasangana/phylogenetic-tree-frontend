@@ -5,7 +5,7 @@ export default {
       name: 'A',
       children: [
         { name: 'fbsjfb ififi  irvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvfiwf' },
-        { name: 'A2 rgerg ' },
+        { name: 'A2 rgerg ',color:"#f20000" },
         { name: 'A3' },
         {
           name: 'C',

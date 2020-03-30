@@ -12,7 +12,8 @@ function Links({
   orientation,
   stepPercent,
   linkThick,
-  fontSize
+  fontSize,
+  linkColor
 }) {
   const parentGap = fontSize*0.7;
   return (
@@ -77,10 +78,12 @@ function Links({
             return (
               <Link
                 data={state}
+                link={data}
                 linkType={linkType}
                 layout={layout}
                 orientation={orientation}
                 stepPercent={stepPercent}
+                linkColor={linkColor}
                 stroke="#374469"
                 strokeWidth={linkThick}
                 fill="none"

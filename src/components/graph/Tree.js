@@ -9,7 +9,8 @@ import Links from "./LinksMove";
 
 // import Nodes from './Nodes';
 import Nodes from "./NodesMove";
-import { FormSelect, Row, Col, FormInput, Slider } from "shards-react";
+import { FormSelect, Row, Col, FormInput, Slider, Button } from "shards-react";
+import { SketchPicker, PhotoshopPicker, CirclePicker } from "react-color";
 
 function expandAll(tree) {
   if (tree.children) {
@@ -29,9 +30,10 @@ export default class extends React.Component {
     linkWidthPercentage: 0.8,
     linkHeightPercentage: 1,
     data: {},
-    fontSize:14,
-    linkThick:1,
-    linkGap:1,
+    fontSize: 14,
+    linkThick: 1,
+    linkGap: 1,
+    linkColor: null
   };
   constructor(props) {
     super(props);
@@ -87,7 +89,8 @@ export default class extends React.Component {
       linkHeightPercentage,
       fontSize,
       linkThick,
-      linkGap
+      linkGap,
+      linkColor
     } = this.state;
     var data = this.data;
     if (width < 10) return null;
@@ -173,7 +176,11 @@ export default class extends React.Component {
               <b>Step</b>
             </label>
             <Slider
-              theme={linkType !== "step" || layout === "polar" ? "secondary":"success"}
+              theme={
+                linkType !== "step" || layout === "polar"
+                  ? "secondary"
+                  : "success"
+              }
               className="my-4"
               connect={[true, false]}
               start={[stepPercent]}
@@ -271,6 +278,40 @@ export default class extends React.Component {
               // disabled={layout === "polar"}
             />
           </Col>
+          <Col>
+            <label>
+              <b>Link Color</b>
+            </label>
+            <Row className="justify-content-center p-3">
+              <Button
+              style={{width:120}}
+                onClick={e => {
+                  if (linkColor) {
+                    this.setState({
+                      linkColor: null
+                    });
+                    
+                  }else{
+                    this.setState({
+                      linkColor:"#f44336"
+                    })
+                    console.log(e.target)
+
+                    e.target.innerHTML = "Disable"
+                  }
+                }}
+              >
+                Enable Coloring
+              </Button>
+            </Row>
+            <CirclePicker 
+              onChange={(color) => {
+                this.setState({
+                  linkColor:color.hex
+                })
+              }}
+            />
+          </Col>
         </Row>
 
         <svg width={width} height={height}>
@@ -281,7 +322,9 @@ export default class extends React.Component {
             left={margin.left}
             root={root}
             size={[sizeWidth, sizeHeight]}
-            separation={(a, b) => (a.parent == b.parent ? linkGap : 1) / a.depth}
+            separation={(a, b) =>
+              (a.parent == b.parent ? linkGap : 1) / a.depth
+            }
           >
             {({ data }) => {
               {
@@ -289,7 +332,6 @@ export default class extends React.Component {
               }
               return (
                 <Group top={origin.y} left={origin.x}>
-                
                   <Nodes
                     nodes={data.descendants()}
                     layout={layout}
@@ -300,15 +342,15 @@ export default class extends React.Component {
                       if (!node.data.isExpanded) {
                         node.data.x0 = node.x;
                         node.data.y0 = node.y;
-                        
                       }
                       node.data.isExpanded = !node.data.isExpanded;
                       this.update();
                     }}
                   />
-                 <Links
+                  <Links
                     links={data.links()}
                     linkType={linkType}
+                    linkColor={linkColor}
                     layout={layout}
                     orientation={orientation}
                     stepPercent={stepPercent}
