@@ -5,7 +5,7 @@ import NodeGroup from "react-move/NodeGroup";
 import Node from "./Node";
 import { findCollapsedParent, getTopLeft } from "./utils";
 
-function Nodes({ nodes, layout, orientation, onNodeClick ,fontSize}) {
+function Nodes({ nodes, layout, orientation, onNodeClick ,...props}) {
   nodes.map(node => {
     node.data.x0 = node.x;
     node.data.y0 = node.y;
@@ -81,7 +81,6 @@ function Nodes({ nodes, layout, orientation, onNodeClick ,fontSize}) {
                   node={node}
                   layout={layout}
                   orientation={orientation}
-                  fontSize={fontSize}
                   onClick={() => {
                     // node.x= newPos.x;
                     // node.y = newPos.y
@@ -89,6 +88,7 @@ function Nodes({ nodes, layout, orientation, onNodeClick ,fontSize}) {
                     }}
                   key={key}
                   orientation={orientation}
+                  {...props}
                 />
               </Group>
             );

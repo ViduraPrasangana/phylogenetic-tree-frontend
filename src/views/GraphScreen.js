@@ -25,7 +25,7 @@ class GraphScreen extends Component {
   render() {
     const {height,width} = this.state
     return <Container fluid className="text-center">
-        <Tree data={data} width={width*0.8} height={height*0.7} />
+        <Tree data={data} width={width*0.9} height={height*0.7} />
     </Container>;
   }
 }

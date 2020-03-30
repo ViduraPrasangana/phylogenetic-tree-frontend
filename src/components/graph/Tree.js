@@ -9,8 +9,27 @@ import Links from "./LinksMove";
 
 // import Nodes from './Nodes';
 import Nodes from "./NodesMove";
-import { FormSelect, Row, Col, FormInput, Slider, Button } from "shards-react";
-import { SketchPicker, PhotoshopPicker, CirclePicker } from "react-color";
+import {
+  FormSelect,
+  Row,
+  Col,
+  FormInput,
+  Slider,
+  Button,
+  FormRadio,
+  FormCheckbox,
+  Card,
+  CardHeader,
+  CardBody
+} from "shards-react";
+import {
+  SketchPicker,
+  PhotoshopPicker,
+  CirclePicker,
+  CompactPicker
+} from "react-color";
+import html2canvas from "html2canvas";
+import ReactToPrint from "react-to-print";
 
 function expandAll(tree) {
   if (tree.children) {
@@ -20,7 +39,21 @@ function expandAll(tree) {
     });
   }
 }
+function triggerDownload(imgURI) {
+  var evt = new MouseEvent("click", {
+    view: window,
+    bubbles: false,
+    cancelable: true
+  });
 
+  var a = document.createElement("a");
+  a.setAttribute("download", "MY_COOL_IMAGE.png");
+  a.setAttribute("href", imgURI);
+  a.setAttribute("target", "_blank");
+
+  a.dispatchEvent(evt);
+}
+// Start file download.
 export default class extends React.Component {
   state = {
     layout: "cartesian",
@@ -33,7 +66,8 @@ export default class extends React.Component {
     fontSize: 14,
     linkThick: 1,
     linkGap: 1,
-    linkColor: null
+    linkColor: null,
+    backgroundColor: "#272b4d"
   };
   constructor(props) {
     super(props);
@@ -44,24 +78,6 @@ export default class extends React.Component {
   update = () => {
     this.forceUpdate();
   };
-
-  // moveNode(newNode) {
-  //   const { data } = this.state;
-  //   data[newNode.data.name] = {x:newNode.data.x0, y:newNode.data.y0};
-  //   this.setState({
-  //     data
-  //   })
-  // }
-  // getNodePos(links) {
-  //   const { data } = this.state;
-  //   links.forEach(element => {
-  //     if(data[element.source.data.name]) {
-  //       console.log(data[element.source.data.name].x,data[element.source.data.name].y)
-  //     element.source.x = data[element.source.data.name].x
-  //     element.source.y = data[element.source.data.name].y
-  //     }
-  //   });
-  // }
 
   render() {
     setTimeout(() => {
@@ -90,7 +106,8 @@ export default class extends React.Component {
       fontSize,
       linkThick,
       linkGap,
-      linkColor
+      linkColor,
+      backgroundColor
     } = this.state;
     var data = this.data;
     if (width < 10) return null;
@@ -123,200 +140,23 @@ export default class extends React.Component {
     const root = hierarchy(data, d => {
       return d.isExpanded ? d.children : null;
     });
-    // root.data.children[0].
-    // root.each((node, i) => node.onClick = () => {
-    //   console.log('clicked');
-    // });
+
     return (
-      <div>
-        <Row className="p-2 pl-4 pr-4">
-          <Col>
-            <label>
-              <b>Layout</b>
-            </label>
-            <FormSelect
-              onChange={e => this.setState({ layout: e.target.value })}
-              value={layout}
-            >
-              <option value="cartesian">cartesian</option>
-              <option value="polar">polar</option>
-            </FormSelect>
-          </Col>
-          <Col>
-            <label>
-              <b>orientation</b>
-            </label>
-            <FormSelect
-              onChange={e => this.setState({ orientation: e.target.value })}
-              value={orientation}
-              disabled={layout === "polar"}
-            >
-              <option value="vertical">vertical</option>
-              <option value="horizontal">horizontal</option>
-            </FormSelect>
-          </Col>
-          <Col>
-            <label>
-              <b>link</b>
-            </label>
-            <FormSelect
-              onChange={e => this.setState({ linkType: e.target.value })}
-              value={linkType}
-            >
-              <option value="diagonal">diagonal</option>
-              <option value="step">step</option>
-              <option value="curve">curve</option>
-              <option value="line">line</option>
-              <option value="elbow">elbow</option>
-            </FormSelect>
-          </Col>
-
-          <Col>
-            <label>
-              <b>Step</b>
-            </label>
-            <Slider
-              theme={
-                linkType !== "step" || layout === "polar"
-                  ? "secondary"
-                  : "success"
-              }
-              className="my-4"
-              connect={[true, false]}
-              start={[stepPercent]}
-              range={{ min: 0, max: 1 }}
-              onSlide={e => {
-                this.setState({ stepPercent: parseFloat(e) });
-              }}
-              value={stepPercent}
-              disabled={linkType !== "step" || layout === "polar"}
-            />
-          </Col>
-          <Col>
-            <label>
-              <b>Link width</b>
-            </label>
-            <Slider
-              theme="success"
-              className="my-4"
-              connect={[true, false]}
-              start={[linkWidthPercentage]}
-              range={{ min: 0, max: 1 }}
-              onSlide={e => {
-                this.setState({ linkWidthPercentage: parseFloat(e) });
-              }}
-              value={stepPercent}
-              disabled={layout === "polar"}
-            />
-          </Col>
-          <Col>
-            <label>
-              <b>Link height</b>
-            </label>
-            <Slider
-              theme="success"
-              className="my-4"
-              connect={[true, false]}
-              start={[linkHeightPercentage]}
-              range={{ min: 0, max: 1 }}
-              onSlide={e => {
-                this.setState({ linkHeightPercentage: parseFloat(e) });
-              }}
-              value={stepPercent}
-              disabled={layout === "polar"}
-            />
-          </Col>
-          <Col>
-            <label>
-              <b>Font Size</b>
-            </label>
-            <Slider
-              theme="success"
-              className="my-4"
-              connect={[true, false]}
-              start={[fontSize]}
-              range={{ min: 0, max: 40 }}
-              onSlide={e => {
-                this.setState({ fontSize: parseFloat(e) });
-              }}
-              value={stepPercent}
-              // disabled={layout === "polar"}
-            />
-          </Col>
-          <Col>
-            <label>
-              <b>Link Thick</b>
-            </label>
-            <Slider
-              theme="success"
-              className="my-4"
-              connect={[true, false]}
-              start={[linkThick]}
-              range={{ min: 0.1, max: 20 }}
-              onSlide={e => {
-                this.setState({ linkThick: parseFloat(e) });
-              }}
-              // value={stepPercent}
-              // disabled={layout === "polar"}
-            />
-          </Col>
-          <Col>
-            <label>
-              <b>Link Gap</b>
-            </label>
-            <Slider
-              theme="success"
-              className="my-4"
-              connect={[true, false]}
-              start={[linkGap]}
-              range={{ min: 0.01, max: 3 }}
-              onSlide={e => {
-                this.setState({ linkGap: parseFloat(e) });
-              }}
-              tooltips
-              // value={stepPercent}
-              // disabled={layout === "polar"}
-            />
-          </Col>
-          <Col>
-            <label>
-              <b>Link Color</b>
-            </label>
-            <Row className="justify-content-center p-3">
-              <Button
-              style={{width:120}}
-                onClick={e => {
-                  if (linkColor) {
-                    this.setState({
-                      linkColor: null
-                    });
-                    
-                  }else{
-                    this.setState({
-                      linkColor:"#f44336"
-                    })
-                    console.log(e.target)
-
-                    e.target.innerHTML = "Disable"
-                  }
-                }}
-              >
-                Enable Coloring
-              </Button>
-            </Row>
-            <CirclePicker 
-              onChange={(color) => {
-                this.setState({
-                  linkColor:color.hex
-                })
-              }}
-            />
-          </Col>
-        </Row>
-
-        <svg width={width} height={height}>
+      <div className="row justify-content-center">
+        <svg width={width} height={height} ref={r => (this.canvas = r)}>
           <LinearGradient id="lg" from="#fd9b93" to="#fe6e9e" />
-          <rect width={width} height={height} rx={14} fill="#272b4d" />
+          <rect
+            width={width}
+            height={height}
+            rx={14}
+            fill={backgroundColor}
+            onClick={e => {
+              if (linkColor)
+                this.setState({
+                  backgroundColor: linkColor
+                });
+            }}
+          />
           <Tree
             top={margin.top}
             left={margin.left}
@@ -337,6 +177,7 @@ export default class extends React.Component {
                     layout={layout}
                     orientation={orientation}
                     fontSize={fontSize}
+                    color={linkColor}
                     ref={r => (this.nodes = r)}
                     onNodeClick={node => {
                       if (!node.data.isExpanded) {
@@ -362,6 +203,248 @@ export default class extends React.Component {
             }}
           </Tree>
         </svg>
+        <Card small style={{ width: width }} className="my-4">
+          <CardHeader className="border-bottom">
+            <h6 className="m-0">Tools for customize the visualization</h6>
+          </CardHeader>
+          <CardBody>
+            <Row className="p-2 pl-4 pr-4">
+              {/* <Col>
+            <label>
+              <b>Layout</b>
+            </label>
+            <FormSelect
+              onChange={e => this.setState({ layout: e.target.value })}
+              value={layout}
+            >
+              <option value="cartesian">cartesian</option>
+              <option value="polar">polar</option>
+            </FormSelect>
+          </Col> */}
+              <Col>
+                <div>
+                  <label>
+                    <b>orientation</b>
+                  </label>
+                  <FormSelect
+                    onChange={e =>
+                      this.setState({ orientation: e.target.value })
+                    }
+                    value={orientation}
+                    disabled={layout === "polar"}
+                  >
+                    <option value="vertical">vertical</option>
+                    <option value="horizontal">horizontal</option>
+                  </FormSelect>
+                </div>
+                <div className="my-3">
+                  <label>
+                    <b>Link width</b>
+                  </label>
+                  <Slider
+                    theme="success"
+                    className="my-1"
+                    connect={[true, false]}
+                    start={[linkWidthPercentage]}
+                    range={{ min: 0, max: 1 }}
+                    onSlide={e => {
+                      this.setState({ linkWidthPercentage: parseFloat(e) });
+                    }}
+                    value={stepPercent}
+                    disabled={layout === "polar"}
+                  />
+                </div>
+              </Col>
+              <Col>
+                <div>
+                  <label>
+                    <b>link</b>
+                  </label>
+                  <FormSelect
+                    onChange={e => this.setState({ linkType: e.target.value })}
+                    value={linkType}
+                  >
+                    <option value="diagonal">diagonal</option>
+                    <option value="step">step</option>
+                    <option value="curve">curve</option>
+                    <option value="line">line</option>
+                  </FormSelect>
+                </div>
+                <div className="my-3">
+                  <label>
+                    <b>Link height</b>
+                  </label>
+                  <Slider
+                    theme="success"
+                    className="my-1"
+                    connect={[true, false]}
+                    start={[linkHeightPercentage]}
+                    range={{ min: 0, max: 1 }}
+                    onSlide={e => {
+                      this.setState({ linkHeightPercentage: parseFloat(e) });
+                    }}
+                    value={stepPercent}
+                    disabled={layout === "polar"}
+                  />
+                </div>
+              </Col>
+
+              <Col>
+                <div className="mb-5">
+                  <label>
+                    <b>Step</b>
+                  </label>
+                  <Slider
+                    theme={
+                      linkType !== "step" || layout === "polar"
+                        ? "secondary"
+                        : "success"
+                    }
+                    className="my-1"
+                    connect={[true, false]}
+                    start={[stepPercent]}
+                    range={{ min: 0, max: 1 }}
+                    onSlide={e => {
+                      this.setState({ stepPercent: parseFloat(e) });
+                    }}
+                    value={stepPercent}
+                    disabled={linkType !== "step" || layout === "polar"}
+                  />
+                </div>
+                <div className="my-3">
+                  <label>
+                    <b>Link Thick</b>
+                  </label>
+                  <Slider
+                    theme="success"
+                    className="my-1"
+                    connect={[true, false]}
+                    start={[linkThick]}
+                    range={{ min: 0.1, max: 20 }}
+                    onSlide={e => {
+                      this.setState({ linkThick: parseFloat(e) });
+                    }}
+                    // value={stepPercent}
+                    // disabled={layout === "polar"}
+                  />
+                </div>
+              </Col>
+
+              <Col>
+                <div className="mb-5">
+                  <label>
+                    <b>Font Size</b>
+                  </label>
+                  <Slider
+                    theme="success"
+                    className="my-1"
+                    connect={[true, false]}
+                    start={[fontSize]}
+                    range={{ min: 4, max: 30 }}
+                    onSlide={e => {
+                      this.setState({ fontSize: parseFloat(e) });
+                    }}
+                    value={stepPercent}
+                    // disabled={layout === "polar"}
+                  />
+                </div>
+                <div className="my-3">
+                  <label>
+                    <b>Link Gap</b>
+                  </label>
+                  <Slider
+                    theme="success"
+                    className="my-1"
+                    connect={[true, false]}
+                    start={[linkGap]}
+                    range={{ min: 0.01, max: 3 }}
+                    onSlide={e => {
+                      this.setState({ linkGap: parseFloat(e) });
+                    }}
+                    tooltips
+                    // value={stepPercent}
+                    // disabled={layout === "polar"}
+                  />
+                </div>
+              </Col>
+              <Col>
+                <label>
+                  <b>Link Color</b>
+                </label>
+                <Row className="justify-content-center p-3">
+                  <FormCheckbox
+                    toggle
+                    small
+                    onClick={e => {
+                      if (linkColor) {
+                        this.setState({
+                          linkColor: null
+                        });
+                      } else {
+                        this.setState({
+                          linkColor: "#000000"
+                        });
+                      }
+                    }}
+                  >
+                    Enable Coloring
+                  </FormCheckbox>
+                </Row>
+                <CompactPicker
+                  color={{ hex: linkColor }}
+                  onChange={color => {
+                    if (linkColor !== null)
+                      this.setState({
+                        linkColor: color.hex
+                      });
+                  }}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Button
+                onClick={() => {
+                  // html2canvas(this.canvas).then(canvas => {
+                  //   const  img  = canvas.toDataURL("image/png");
+                  //   var newData = img.replace(/^data:image\/png/, "data:application/octet-stream");
+                  //   window.location = newData
+                  //   console.log(newData)
+                  // });
+                  console.log(this.canvas)
+                  var canvas = this.canvas;
+                  var ctx = canvas.getContext("2d");
+                  var data = new XMLSerializer().serializeToString(ctx);
+                  var DOMURL = window.URL || window.webkitURL || window;
+
+                  var img = new Image();
+                  var svgBlob = new Blob([data], {
+                    type: "image/svg+xml;charset=utf-8"
+                  });
+                  var url = DOMURL.createObjectURL(svgBlob);
+
+                  img.onload = function() {
+                    ctx.drawImage(img, 0, 0);
+                    DOMURL.revokeObjectURL(url);
+
+                    var imgURI = canvas
+                      .toDataURL("image/png")
+                      .replace("image/png", "image/octet-stream");
+
+                    triggerDownload(imgURI);
+                  };
+
+                  img.src = url;
+                }}
+              >
+                Download as PNG
+              </Button>
+              <ReactToPrint
+                trigger={() => <Button onClick={() => {}}>Print ticket</Button>}
+                content={() => this.canvas}
+              />
+            </Row>
+          </CardBody>
+        </Card>
       </div>
     );
   }

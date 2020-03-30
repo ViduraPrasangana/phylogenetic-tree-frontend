@@ -3,7 +3,7 @@ import { Group } from "@vx/group";
 import { Drag } from "@vx/drag";
 var textWidth = 10;
 
-function Node({ node, onClick, orientation, fontSize }) {
+function Node({ node, onClick, orientation, fontSize, color }) {
   var width = 40;
   const height = 20;
   const fontShownText =
@@ -11,13 +11,13 @@ function Node({ node, onClick, orientation, fontSize }) {
       ? node.data.name
       : node.data.name.length < 10
       ? node.data.name
-      : node.data.name.substring(0,8) + "...";
+      : node.data.name.substring(0, 8) + "...";
   const fontShownTextLength =
     orientation === "horizontal"
       ? node.data.name
       : node.data.name.length < 10
       ? node.data.name
-      : node.data.name.substring(0,8) + "...";
+      : node.data.name.substring(0, 8) + "...";
   const calcWidth = Math.max((fontShownText.length * fontSize) / 1.8, width);
   const calcHeight = Math.max(fontSize * 1.5, height);
   return (
@@ -69,7 +69,11 @@ function Node({ node, onClick, orientation, fontSize }) {
                 strokeDasharray={!node.data.children ? "2,2" : "0"}
                 strokeOpacity={!node.data.children ? 0.6 : 1}
                 rx={!node.data.children ? 10 : 0}
-                onClick={onClick}
+                onClick={e => {
+                  if (color) e.target.setAttribute("fill", color);
+                  if (color) e.target.setAttribute("stroke", color);
+                  onClick(e)
+                }}
                 onMouseMove={dragMove}
                 onMouseUp={e => dragEnd(e)}
                 onMouseDown={dragStart}
@@ -85,8 +89,11 @@ function Node({ node, onClick, orientation, fontSize }) {
               textAnchor={"middle"}
               style={{ pointerEvents: "none", userSelect: "none" }}
               x={calcWidth / 2 - width / 2}
-              fill={node.children ? "white" : "#26deb0"}
+              fill={node.data.children ? "white" : "#26deb0"}
               transform={`translate(${dx}, ${dy})`}
+              onClick={e=>{
+                if (color) e.target.setAttribute("fill", color);
+              }}
               onMouseMove={dragMove}
               onMouseUp={dragEnd}
               onMouseDown={dragStart}
