@@ -48,6 +48,9 @@ function Link({ data, linkType, layout, orientation, stepPercent, ...props }) {
       }
     }
   }
+  // console.log(data)
+  // const  tempData = {...data}
+  // tempData.target.y =tempData.target.y-20 
 
   return (
     <LinkComponent
@@ -56,7 +59,9 @@ function Link({ data, linkType, layout, orientation, stepPercent, ...props }) {
       stroke="#374469"
       strokeWidth="1"
       fill="none"
+      onClick={()=>console.log("CLicked")}
       {...props}
+      
     />
   )
 }

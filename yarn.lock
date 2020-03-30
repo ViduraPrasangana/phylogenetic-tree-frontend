@@ -1709,6 +1709,23 @@
   dependencies:
     d3-shape "^1.0.6"
 
+"@vx/drag@^0.0.195":
+  version "0.0.195"
+  resolved "https://registry.yarnpkg.com/@vx/drag/-/drag-0.0.195.tgz#cec32802187dd64fbfc4e9a05ba6dfef341fb6f1"
+  integrity sha512-0/2tBGo2pJq3nXg5fRQYP4jIDI9CAmFqcWN7BJe290jSnqWqZGtcH04Jmaip1XumaGrvAGgfINp9TvqXBFJnDw==
+  dependencies:
+    "@types/react" "*"
+    "@vx/event" "0.0.195"
+    prop-types "^15.5.10"
+
+"@vx/event@0.0.195":
+  version "0.0.195"
+  resolved "https://registry.yarnpkg.com/@vx/event/-/event-0.0.195.tgz#6af8077223160a1261078990b527859f34009a32"
+  integrity sha512-7LgFdMvQD0SW0ZIWzqZ/umD+q4xwrJexuAeuUoxkV7tzt+fnPTkbnkymq371ZGvVAIGtv6urPrnOWyEvngQECw==
+  dependencies:
+    "@types/react" "*"
+    "@vx/point" "0.0.195"
+
 "@vx/gradient@0.0.153":
   version "0.0.153"
   resolved "https://registry.yarnpkg.com/@vx/gradient/-/gradient-0.0.153.tgz#029b192638b5f165dab0a26d1811f2b54ed6590e"
@@ -1737,6 +1754,11 @@
   version "0.0.153"
   resolved "https://registry.yarnpkg.com/@vx/point/-/point-0.0.153.tgz#c0623f72804026a5afe7e1602bb27cd7b0847afc"
   integrity sha512-eAFFt25Wi+GAjHImLBop1oV7mXNE5mB/zi+OsQJxcRM1C5xc2TWs1OFUZpxuQ71DeGkUCIVM6YvAMD740MWniA==
+
+"@vx/point@0.0.195":
+  version "0.0.195"
+  resolved "https://registry.yarnpkg.com/@vx/point/-/point-0.0.195.tgz#03d272e6e2d640ee7ba7d7097a93f00a339163ea"
+  integrity sha512-2m16lfs4v8BwjWMhGNDC4lBBOwaimRL4BapFTS1UQWYSV12y0KlsJGD17fPdR6X9RzYWJTnOL/yaQuGCBa9AdQ==
 
 "@vx/shape@0.0.158":
   version "0.0.158"

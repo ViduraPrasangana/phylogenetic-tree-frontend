@@ -11,13 +11,13 @@ import Links from "./LinksMove";
 import Nodes from "./NodesMove";
 import { FormSelect, Row, Col, FormInput, Slider } from "shards-react";
 
-function expandAll(tree){
-    if(tree.children){
-      tree.isExpanded=true
-      tree.children.forEach(element => {
-        expandAll(element)
-      });
-    }
+function expandAll(tree) {
+  if (tree.children) {
+    tree.isExpanded = true;
+    tree.children.forEach(element => {
+      expandAll(element);
+    });
+  }
 }
 
 export default class extends React.Component {
@@ -26,22 +26,47 @@ export default class extends React.Component {
     orientation: "horizontal",
     linkType: "diagonal",
     stepPercent: 0.5,
-    linkWidthPercentage:0.8,
-    linkHeightPercentage:1
-
+    linkWidthPercentage: 0.8,
+    linkHeightPercentage: 1,
+    data: {},
+    fontSize:14,
+    linkThick:1,
+    linkGap:1,
   };
-  constructor(props){
-    super(props)
-    this.data = props.data
+  constructor(props) {
+    super(props);
+    this.data = props.data;
     expandAll(this.data);
   }
 
+  update = () => {
+    this.forceUpdate();
+  };
+
+  // moveNode(newNode) {
+  //   const { data } = this.state;
+  //   data[newNode.data.name] = {x:newNode.data.x0, y:newNode.data.y0};
+  //   this.setState({
+  //     data
+  //   })
+  // }
+  // getNodePos(links) {
+  //   const { data } = this.state;
+  //   links.forEach(element => {
+  //     if(data[element.source.data.name]) {
+  //       console.log(data[element.source.data.name].x,data[element.source.data.name].y)
+  //     element.source.x = data[element.source.data.name].x
+  //     element.source.y = data[element.source.data.name].y
+  //     }
+  //   });
+  // }
+
   render() {
-    setTimeout(()=>{
-      if(this.nodes){
-        this.nodes.onNodeClick()
-        }
-    },5000)
+    setTimeout(() => {
+      if (this.nodes) {
+        this.nodes.onNodeClick();
+      }
+    }, 5000);
     const {
       width,
       height,
@@ -53,8 +78,18 @@ export default class extends React.Component {
         bottom: 30
       }
     } = this.props;
-    const { layout, orientation, linkType, stepPercent,linkWidthPercentage,linkHeightPercentage } = this.state;
-    var data = this.data
+    const {
+      layout,
+      orientation,
+      linkType,
+      stepPercent,
+      linkWidthPercentage,
+      linkHeightPercentage,
+      fontSize,
+      linkThick,
+      linkGap
+    } = this.state;
+    var data = this.data;
     if (width < 10) return null;
 
     const innerWidth = width - margin.left - margin.right;
@@ -74,23 +109,21 @@ export default class extends React.Component {
     } else {
       origin = { x: 0, y: 0 };
       if (orientation === "vertical") {
-        sizeWidth = innerWidth*linkWidthPercentage;
-        sizeHeight = innerHeight*linkHeightPercentage;
+        sizeWidth = innerWidth * linkWidthPercentage;
+        sizeHeight = innerHeight * linkHeightPercentage;
       } else {
-        sizeWidth = innerHeight*linkHeightPercentage;
-        sizeHeight = innerWidth*linkWidthPercentage;
+        sizeWidth = innerHeight * linkHeightPercentage;
+        sizeHeight = innerWidth * linkWidthPercentage;
       }
     }
 
     const root = hierarchy(data, d => {
-    
-      return(d.isExpanded ? d.children : null)
+      return d.isExpanded ? d.children : null;
     });
     // root.data.children[0].
     // root.each((node, i) => node.onClick = () => {
     //   console.log('clicked');
     // });
-    console.log("Root ",root)
     return (
       <div>
         <Row className="p-2 pl-4 pr-4">
@@ -107,7 +140,9 @@ export default class extends React.Component {
             </FormSelect>
           </Col>
           <Col>
-            <label><b>orientation</b></label>
+            <label>
+              <b>orientation</b>
+            </label>
             <FormSelect
               onChange={e => this.setState({ orientation: e.target.value })}
               value={orientation}
@@ -118,7 +153,9 @@ export default class extends React.Component {
             </FormSelect>
           </Col>
           <Col>
-            <label><b>link</b></label>
+            <label>
+              <b>link</b>
+            </label>
             <FormSelect
               onChange={e => this.setState({ linkType: e.target.value })}
               value={linkType}
@@ -136,7 +173,7 @@ export default class extends React.Component {
               <b>Step</b>
             </label>
             <Slider
-              theme="success"
+              theme={linkType !== "step" || layout === "polar" ? "secondary":"success"}
               className="my-4"
               connect={[true, false]}
               start={[stepPercent]}
@@ -161,9 +198,8 @@ export default class extends React.Component {
               onSlide={e => {
                 this.setState({ linkWidthPercentage: parseFloat(e) });
               }}
-              
               value={stepPercent}
-              disabled={ layout === "polar"}
+              disabled={layout === "polar"}
             />
           </Col>
           <Col>
@@ -180,7 +216,59 @@ export default class extends React.Component {
                 this.setState({ linkHeightPercentage: parseFloat(e) });
               }}
               value={stepPercent}
-              disabled={ layout === "polar"}
+              disabled={layout === "polar"}
+            />
+          </Col>
+          <Col>
+            <label>
+              <b>Font Size</b>
+            </label>
+            <Slider
+              theme="success"
+              className="my-4"
+              connect={[true, false]}
+              start={[fontSize]}
+              range={{ min: 0, max: 40 }}
+              onSlide={e => {
+                this.setState({ fontSize: parseFloat(e) });
+              }}
+              value={stepPercent}
+              // disabled={layout === "polar"}
+            />
+          </Col>
+          <Col>
+            <label>
+              <b>Link Thick</b>
+            </label>
+            <Slider
+              theme="success"
+              className="my-4"
+              connect={[true, false]}
+              start={[linkThick]}
+              range={{ min: 0.1, max: 20 }}
+              onSlide={e => {
+                this.setState({ linkThick: parseFloat(e) });
+              }}
+              // value={stepPercent}
+              // disabled={layout === "polar"}
+            />
+          </Col>
+          <Col>
+            <label>
+              <b>Link Gap</b>
+            </label>
+            <Slider
+              theme="success"
+              className="my-4"
+              connect={[true, false]}
+              start={[linkGap]}
+              range={{ min: 0.01, max: 3 }}
+              onSlide={e => {
+                this.setState({ linkGap: parseFloat(e) });
+              }}
+              tooltips
+              // value={stepPercent}
+              // disabled={layout === "polar"}
             />
           </Col>
         </Row>
@@ -193,35 +281,43 @@ export default class extends React.Component {
             left={margin.left}
             root={root}
             size={[sizeWidth, sizeHeight]}
-            separation={(a, b) => (a.parent == b.parent ? 1 : 0.5) / a.depth}
+            separation={(a, b) => (a.parent == b.parent ? linkGap : 1) / a.depth}
           >
-            {({ data }) => (
-              <Group top={origin.y} left={origin.x}>
-              {/* {console.log(data.links())} */}
-                <Links
-                  links={data.links()}
-                  linkType={linkType}
-                  layout={layout}
-                  orientation={orientation}
-                  stepPercent={stepPercent}
-                />
-
-                <Nodes
-                  nodes={data.descendants()}
-                  layout={layout}
-                  orientation={orientation}
-                  ref={r => this.nodes = r}
-                  onNodeClick={node => {
-                    if (!node.data.isExpanded) {
-                      node.data.x0 = node.x;
-                      node.data.y0 = node.y;
-                    }
-                    node.data.isExpanded = !node.data.isExpanded;
-                    this.forceUpdate();
-                  }}
-                />
-              </Group>
-            )}
+            {({ data }) => {
+              {
+                /* if( data.links()[0])data.links()[0].target.x=6 */
+              }
+              return (
+                <Group top={origin.y} left={origin.x}>
+                
+                  <Nodes
+                    nodes={data.descendants()}
+                    layout={layout}
+                    orientation={orientation}
+                    fontSize={fontSize}
+                    ref={r => (this.nodes = r)}
+                    onNodeClick={node => {
+                      if (!node.data.isExpanded) {
+                        node.data.x0 = node.x;
+                        node.data.y0 = node.y;
+                        
+                      }
+                      node.data.isExpanded = !node.data.isExpanded;
+                      this.update();
+                    }}
+                  />
+                 <Links
+                    links={data.links()}
+                    linkType={linkType}
+                    layout={layout}
+                    orientation={orientation}
+                    stepPercent={stepPercent}
+                    linkThick={linkThick}
+                    fontSize={fontSize}
+                  />
+                </Group>
+              );
+            }}
           </Tree>
         </svg>
       </div>
