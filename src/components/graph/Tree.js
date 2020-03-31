@@ -212,7 +212,7 @@ export default class extends React.Component {
             <Col  className="col-12 col-lg-9">
             <Row >
               
-              <Col>
+              <Col className="col-6 col-md-3">
                 <div>
                   <label>
                     <b>orientation</b>
@@ -229,7 +229,7 @@ export default class extends React.Component {
                   </FormSelect>
                 </div>
                 </Col>
-              <Col>
+              <Col className="col-6 col-md-3">
                 <div>
                   <label>
                     <b>link</b>
@@ -246,7 +246,7 @@ export default class extends React.Component {
                 </div>
                 </Col>
 
-              <Col>
+              <Col className="col-6 col-md-3">
                 <div >
                   <label>
                     <b>Step</b>
@@ -270,7 +270,7 @@ export default class extends React.Component {
                 </div>
                </Col>
 
-              <Col>
+              <Col className="col-6 col-md-3">
                 <div >
                   <label>
                     <b>Font Size</b>
@@ -292,7 +292,7 @@ export default class extends React.Component {
               </Row>
             <Row >
               
-              <Col>
+              <Col className="col-6 col-md-3">
                 <div >
                   <label>
                     <b>Link width</b>
@@ -311,7 +311,7 @@ export default class extends React.Component {
                   />
                 </div>
               </Col>
-              <Col>
+              <Col className="col-6 col-md-3">
                <div>
                   <label>
                     <b>Link height</b>
@@ -331,7 +331,7 @@ export default class extends React.Component {
                 </div>
               </Col>
 
-              <Col>
+              <Col className="col-6 col-md-3">
                 <div>
                   <label>
                     <b>Link Thick</b>
@@ -351,7 +351,7 @@ export default class extends React.Component {
                 </div>
               </Col>
 
-              <Col>
+              <Col className="col-6 col-md-3">
                <div>
                   <label>
                     <b>Link Gap</b>
