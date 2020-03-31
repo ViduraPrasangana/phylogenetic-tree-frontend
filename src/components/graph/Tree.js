@@ -3,7 +3,7 @@ import { Group } from "@vx/group";
 import { Tree } from "@vx/hierarchy";
 import { LinearGradient } from "@vx/gradient";
 import { hierarchy } from "d3-hierarchy";
-
+import jsPDF from "jspdf"
 // import Links from './Links';
 import Links from "./LinksMove";
 
@@ -361,7 +361,7 @@ export default class extends React.Component {
                     onSlide={e => {
                       this.setState({ linkGap: parseFloat(e) });
                     }}
-                    tooltips
+                    // tooltips
                     // value={stepPercent}
                     // disabled={layout === "polar"}
                   />
@@ -403,43 +403,20 @@ export default class extends React.Component {
             </Row>
             <Row>
               <Button
+              className="mx-3"
                 onClick={() => {
-                  // html2canvas(this.canvas).then(canvas => {
-                  //   const  img  = canvas.toDataURL("image/png");
-                  //   var newData = img.replace(/^data:image\/png/, "data:application/octet-stream");
-                  //   window.location = newData
-                  //   console.log(newData)
-                  // });
-                  console.log(this.canvas)
-                  var canvas = this.canvas;
-                  var ctx = canvas.getContext("2d");
-                  var data = new XMLSerializer().serializeToString(ctx);
-                  var DOMURL = window.URL || window.webkitURL || window;
-
-                  var img = new Image();
-                  var svgBlob = new Blob([data], {
-                    type: "image/svg+xml;charset=utf-8"
-                  });
-                  var url = DOMURL.createObjectURL(svgBlob);
-
-                  img.onload = function() {
-                    ctx.drawImage(img, 0, 0);
-                    DOMURL.revokeObjectURL(url);
-
-                    var imgURI = canvas
-                      .toDataURL("image/png")
-                      .replace("image/png", "image/octet-stream");
-
-                    triggerDownload(imgURI);
-                  };
-
-                  img.src = url;
+                  html2canvas(this.canvas).then(canvas => {
+                    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF({orientation: 'landscape'});
+    pdf.addImage(imgData, 'PNG', 0, 0);
+    pdf.save("download.pdf");  
+                  })
                 }}
               >
-                Download as PNG
+                Download as PDF
               </Button>
               <ReactToPrint
-                trigger={() => <Button onClick={() => {}}>Print ticket</Button>}
+                trigger={() => <Button className="mx-3" onClick={() => {}}>Print ticket</Button>}
                 content={() => this.canvas}
               />
             </Row>

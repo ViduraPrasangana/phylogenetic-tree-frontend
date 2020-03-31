@@ -15,7 +15,7 @@ function Links({
   fontSize,
   linkColor
 }) {
-  const parentGap = fontSize*0.7;
+  const parentGap = fontSize * 0.7;
   return (
     <NodeGroup
       data={links}
@@ -82,7 +82,13 @@ function Links({
                 linkType={linkType}
                 layout={layout}
                 orientation={orientation}
-                stepPercent={stepPercent}
+                stepPercent={
+                  data.target.data.children
+                    ? stepPercent -
+                      (stepPercent * (20 - parentGap)) /
+                        (data.target.y - data.source.y - 2 * parentGap)
+                    : stepPercent
+                }
                 linkColor={linkColor}
                 stroke="#374469"
                 strokeWidth={linkThick}
