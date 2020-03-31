@@ -209,7 +209,7 @@ export default class extends React.Component {
           </CardHeader>
           <CardBody>
           <Row>
-            <Col  className="col-9">
+            <Col  className="col-12 col-lg-9">
             <Row >
               
               <Col>
@@ -374,7 +374,7 @@ export default class extends React.Component {
             </Row>
             
             </Col>
-            <Col className="col-3">
+            <Col className="col-12 col-lg-3 mb-3 pr-3">
                 <label>
                   <b>Color components</b>
                 </label>
@@ -409,7 +409,7 @@ export default class extends React.Component {
               </Col>
             
           </Row>
-           <Row>
+           <Row >
               <Button
               className="mx-3"
                 onClick={() => {
