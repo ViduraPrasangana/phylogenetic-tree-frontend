@@ -204,23 +204,14 @@ export default class extends React.Component {
           </Tree>
         </svg>
         <Card small style={{ width: width }} className="my-4">
-          <CardHeader className="border-bottom">
-            <h6 className="m-0">Tools for customize the visualization</h6>
+          <CardHeader className="">
+            <h6 className="m-0">ToolBox</h6>
           </CardHeader>
           <CardBody>
-            <Row className="p-2 pl-4 pr-4">
-              {/* <Col>
-            <label>
-              <b>Layout</b>
-            </label>
-            <FormSelect
-              onChange={e => this.setState({ layout: e.target.value })}
-              value={layout}
-            >
-              <option value="cartesian">cartesian</option>
-              <option value="polar">polar</option>
-            </FormSelect>
-          </Col> */}
+          <Row>
+            <Col  className="col-9">
+            <Row >
+              
               <Col>
                 <div>
                   <label>
@@ -237,24 +228,7 @@ export default class extends React.Component {
                     <option value="horizontal">horizontal</option>
                   </FormSelect>
                 </div>
-                <div className="my-3">
-                  <label>
-                    <b>Link width</b>
-                  </label>
-                  <Slider
-                    theme="success"
-                    className="my-1"
-                    connect={[true, false]}
-                    start={[linkWidthPercentage]}
-                    range={{ min: 0, max: 1 }}
-                    onSlide={e => {
-                      this.setState({ linkWidthPercentage: parseFloat(e) });
-                    }}
-                    value={stepPercent}
-                    disabled={layout === "polar"}
-                  />
-                </div>
-              </Col>
+                </Col>
               <Col>
                 <div>
                   <label>
@@ -270,13 +244,81 @@ export default class extends React.Component {
                     <option value="line">line</option>
                   </FormSelect>
                 </div>
-                <div className="my-3">
+                </Col>
+
+              <Col>
+                <div >
+                  <label>
+                    <b>Step</b>
+                  </label>
+                  <Slider
+                    theme={
+                      linkType !== "step" || layout === "polar"
+                        ? "secondary"
+                        : "success"
+                    }
+                    className="mt-3"
+                    connect={[true, false]}
+                    start={[stepPercent]}
+                    range={{ min: 0, max: 1 }}
+                    onSlide={e => {
+                      this.setState({ stepPercent: parseFloat(e) });
+                    }}
+                    value={stepPercent}
+                    disabled={linkType !== "step" || layout === "polar"}
+                  />
+                </div>
+               </Col>
+
+              <Col>
+                <div >
+                  <label>
+                    <b>Font Size</b>
+                  </label>
+                  <Slider
+                    theme="success"
+                    className="mt-3"
+                    connect={[true, false]}
+                    start={[fontSize]}
+                    range={{ min: 4, max: 30 }}
+                    onSlide={e => {
+                      this.setState({ fontSize: parseFloat(e) });
+                    }}
+                    value={stepPercent}
+                    // disabled={layout === "polar"}
+                  />
+                </div>
+                 </Col>
+              </Row>
+            <Row >
+              
+              <Col>
+                <div >
+                  <label>
+                    <b>Link width</b>
+                  </label>
+                  <Slider
+                    theme="success"
+                    className="mt-3"
+                    connect={[true, false]}
+                    start={[linkWidthPercentage]}
+                    range={{ min: 0, max: 1 }}
+                    onSlide={e => {
+                      this.setState({ linkWidthPercentage: parseFloat(e) });
+                    }}
+                    value={stepPercent}
+                    disabled={layout === "polar"}
+                  />
+                </div>
+              </Col>
+              <Col>
+               <div>
                   <label>
                     <b>Link height</b>
                   </label>
                   <Slider
                     theme="success"
-                    className="my-1"
+                    className="mt-3"                    
                     connect={[true, false]}
                     start={[linkHeightPercentage]}
                     range={{ min: 0, max: 1 }}
@@ -290,34 +332,13 @@ export default class extends React.Component {
               </Col>
 
               <Col>
-                <div className="mb-5">
-                  <label>
-                    <b>Step</b>
-                  </label>
-                  <Slider
-                    theme={
-                      linkType !== "step" || layout === "polar"
-                        ? "secondary"
-                        : "success"
-                    }
-                    className="my-1"
-                    connect={[true, false]}
-                    start={[stepPercent]}
-                    range={{ min: 0, max: 1 }}
-                    onSlide={e => {
-                      this.setState({ stepPercent: parseFloat(e) });
-                    }}
-                    value={stepPercent}
-                    disabled={linkType !== "step" || layout === "polar"}
-                  />
-                </div>
-                <div className="my-3">
+                <div>
                   <label>
                     <b>Link Thick</b>
                   </label>
                   <Slider
                     theme="success"
-                    className="my-1"
+                    className="my-3"
                     connect={[true, false]}
                     start={[linkThick]}
                     range={{ min: 0.1, max: 20 }}
@@ -331,30 +352,13 @@ export default class extends React.Component {
               </Col>
 
               <Col>
-                <div className="mb-5">
-                  <label>
-                    <b>Font Size</b>
-                  </label>
-                  <Slider
-                    theme="success"
-                    className="my-1"
-                    connect={[true, false]}
-                    start={[fontSize]}
-                    range={{ min: 4, max: 30 }}
-                    onSlide={e => {
-                      this.setState({ fontSize: parseFloat(e) });
-                    }}
-                    value={stepPercent}
-                    // disabled={layout === "polar"}
-                  />
-                </div>
-                <div className="my-3">
+               <div>
                   <label>
                     <b>Link Gap</b>
                   </label>
                   <Slider
                     theme="success"
-                    className="my-1"
+                    className="my-3"
                     connect={[true, false]}
                     start={[linkGap]}
                     range={{ min: 0.01, max: 3 }}
@@ -367,9 +371,12 @@ export default class extends React.Component {
                   />
                 </div>
               </Col>
-              <Col>
+            </Row>
+            
+            </Col>
+            <Col className="col-3">
                 <label>
-                  <b>Link Color</b>
+                  <b>Color components</b>
                 </label>
                 <Row className="justify-content-center p-3">
                   <FormCheckbox
@@ -400,8 +407,9 @@ export default class extends React.Component {
                   }}
                 />
               </Col>
-            </Row>
-            <Row>
+            
+          </Row>
+           <Row>
               <Button
               className="mx-3"
                 onClick={() => {
