@@ -31,7 +31,7 @@ class GettingStarted extends Component {
                 style={{
                   borderStyle: "dashed solid",
                   borderRadius: 20,
-                  borderWidth: 2
+                  borderWidth: 2,
                 }}
               >
                 <Files
@@ -53,8 +53,8 @@ class GettingStarted extends Component {
           </Card>
         </Row>
         {selectedFiles.length && (
-          <Row className="justify-content-center mt-3">
-            <Card style={{ width: "80%" }}>
+          <Row className="justify-content-center mt-3 " style={{height:"150%"}}>
+            <Card className="overflow-scroll" style={{maxHeight:"30%", width: "80%" }}>
               <CardBody>
                 {selectedFiles.map((element, index) => {
                   return (
