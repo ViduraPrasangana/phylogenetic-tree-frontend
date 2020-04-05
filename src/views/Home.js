@@ -45,6 +45,10 @@ class Home extends Component {
     }
   }
 
+  handleClickSamples = ()=>{
+    this.props.history.push("\samples")
+  }
+
   render() {
     const {
 
@@ -80,7 +84,8 @@ class Home extends Component {
             Get Started
           </Button>
           <br/>
-          <Button size="lg" theme="primary" outline className="m-1" style={{width:"200px"}}>
+          <Button size="lg" theme="primary" outline className="m-1" style={{width:"200px"}}
+          onClick={this.handleClickSamples}>
             Try with samples
           </Button>
         </Col>
