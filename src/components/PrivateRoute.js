@@ -14,7 +14,8 @@ class PrivateRoute extends React.Component {
             !currentUser &&
             rest.location.pathname !== "/login" &&
             rest.location.pathname !== "/register" &&
-            rest.location.pathname !== "/"
+            rest.location.pathname !== "/" &&
+            rest.location.pathname !== "/samples" 
           ) {
             return (
               <Redirect
