@@ -9,7 +9,7 @@ import {
   NavItem,
   NavLink,
   Col,
-  Row
+  Row,
 } from "shards-react";
 import { connect } from "react-redux";
 
@@ -18,7 +18,7 @@ class UserActions extends React.Component {
     super(props);
 
     this.state = {
-      visible: false
+      visible: false,
     };
 
     this.toggleUserActions = this.toggleUserActions.bind(this);
@@ -26,28 +26,40 @@ class UserActions extends React.Component {
 
   toggleUserActions() {
     this.setState({
-      visible: !this.state.visible
+      visible: !this.state.visible,
     });
   }
 
   render() {
-    const { user } = this.props;
+    const { user } = this.props.user;
     return (
       // <NavItem  toggle={this.toggleUserActions}>
-      <NavLink  className="text-nowrap px-3">
-      <Row><Col> <img
-          className="user-avatar rounded-circle mr-2"
-          src={require("../../../../assets/images/avatars/default-avatar-admin.png")}
-          alt="User Avatar"
-        /></Col>
-       
-        <Col className="justify-content-center">
-          <span className="d-none d-md-inline-block text-center">
-            {user.first_name + " " + user.last_name}
-          </span>
-          <br />
-          <span className="d-none d-md-inline-block text-success"><p><b>{user.category}</b></p></span>
-        </Col></Row>
+      <NavLink className="text-nowrap px-3">
+        <Row>
+          <Col>
+            {" "}
+            <img
+              className="user-avatar rounded-circle mt-1"
+              src={require("../../../../assets/images/avatars/default-avatar-admin.png")}
+              alt="User Avatar"
+            />
+          </Col>
+
+          <Col className="d-flex align-content-center">
+            <span
+              className="d-none d-md-inline-block text-center mt-2"
+              style={{ fontSize: 18,color:"white" }}
+            >
+              {user.first_name + " " + user.last_name}
+            </span>
+            <br />
+            <span className="d-none d-md-inline-block text-success">
+              <p>
+                <b>{user.category}</b>
+              </p>
+            </span>
+          </Col>
+        </Row>
       </NavLink>
 
       // </NavItem>
@@ -55,9 +67,9 @@ class UserActions extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.userReducer
+    user: state.userReducer,
   };
 };
 export default connect(mapStateToProps, null)(UserActions);
