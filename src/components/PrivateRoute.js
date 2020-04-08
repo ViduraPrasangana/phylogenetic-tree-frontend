@@ -36,7 +36,7 @@ class PrivateRoute extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.customerReducer
+    user: state.userReducer
   };
 };
 

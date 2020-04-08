@@ -13,7 +13,7 @@ export default (state = initialUser, action) => {
       };
     case User.LOGOUT:
       return {
-        
+        user:null
       };
     case User.ERROR:
       return {

@@ -20,16 +20,17 @@ import moment from "moment";
 import { quarterTrans, fullTrans } from "../data/constants";
 import Axios from "axios";
 import config from "../data/config";
+import { UserActions } from "../actions/user.actions";
+import { connect } from "react-redux";
 
-export default class Register extends Component {
+class Register extends Component {
   state = {
+    username:null,
     email: null,
     firstName: null,
     lastName: null,
     password: null,
     confirmPassword: null,
-    isErrorDate: false,
-    errorDate: "You should be 18+",
     registered: null,
     message: ""
   };
@@ -44,38 +45,22 @@ export default class Register extends Component {
         firstName,
         lastName,
         password,
-        country,
-        gender,
-        nic,
-        date
+        username,
+        confirmPassword,
       } = this.state;
       const user = {
-        email,
+        username,
         first_name: firstName,
         last_name: lastName,
+        email,
         password,
-        country,
-        gender,
-        NIC: nic,
-        birthday: moment(date).format("YYYY-MM-DD")
+        confirm_password:confirmPassword
       };
-      this.register(user);
+      this.props.register(user);
     }
   }
 
-  register = user => {
-    Axios.post(config.host_url + "customers", user)
-      .then(res =>
-        this.setState({ registered: true, message: "Registered Successfully" })
-      )
-      .catch(err => {
-        console.log(err.response.data.error.message);
-        this.setState({
-          registered: false,
-          message: err.response.data.error.message
-        });
-      });
-  };
+ 
   validate() {
     if (this.validator.allValid()) {
       return true;
@@ -95,10 +80,17 @@ export default class Register extends Component {
       email,
       firstName,
       password,
+      username,
       registered,
-      message
+      message,
+      
     } = this.state;
-
+    if (this.props.user.user) this.props.history.push("/")
+    const validUsername = this.validator.message(
+      "firstName",
+      username,
+      "required|alpha"
+    );
     const validFirstName = this.validator.message(
       "firstName",
       firstName,
@@ -128,6 +120,19 @@ export default class Register extends Component {
         </CardHeader>
         <Col>
           <Form>
+          <Row form className="form-group pt-3">
+              <Col md className="pr-0">
+                <FormInput
+                  id="username"
+                  placeholder="username"
+                  onChange={e => {
+                    this.setState({ username: e.target.value });
+                  }}
+                  invalid={validUsername}
+                  style={quarterTrans}
+                />
+              </Col>
+            </Row>
             <Row form className="form-group pt-3">
               <Col md className="pl-0">
                 <FormInput
@@ -223,3 +228,17 @@ export default class Register extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    user: state.userReducer
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    register: (user) => {
+      dispatch(UserActions.register(user));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

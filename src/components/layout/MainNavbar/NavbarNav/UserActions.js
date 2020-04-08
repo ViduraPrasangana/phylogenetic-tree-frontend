@@ -57,7 +57,7 @@ class UserActions extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.customerReducer.user.data
+    user: state.userReducer
   };
 };
 export default connect(mapStateToProps, null)(UserActions);

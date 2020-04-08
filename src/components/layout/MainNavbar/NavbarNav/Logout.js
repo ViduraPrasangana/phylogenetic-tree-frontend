@@ -1,6 +1,6 @@
 import React from "react";
 import { NavItem, NavLink, Tooltip} from "shards-react";
-import { UserActions } from "../../../../actions/customer.actions";
+import { UserActions } from "../../../../actions/user.actions";
 import { connect } from "react-redux";
 
 class Logout extends React.Component {
@@ -27,7 +27,7 @@ class Logout extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    user: state.customerReducer
+    user: state.userReducer
   };
 };
 const mapDispatchToProps = dispatch => {

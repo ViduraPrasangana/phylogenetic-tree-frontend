@@ -12,23 +12,22 @@ import {
   Alert
 } from "shards-react";
 import { halfTrans, fullTrans, quarterTrans } from "../data/constants";
-import { UserActions } from "../actions/customer.actions";
+import { UserActions } from "../actions/user.actions";
 import { connect } from "react-redux";
 import roles from "../data/roles";
 
 class Login extends Component {
   state = {
-    email: "",
+    username: "",
     password: ""
   };
   login = () => {
-    const { email, password } = this.state;
-    this.props.login(email, password);
+    const { username, password } = this.state;
+    this.props.login(username, password);
   };
   render() {
     const { user} = this.props
-    if (user.user && user.user.role===roles.customer) this.props.history.push("/")
-    else if (user.user && user.user.role===roles.management) this.props.history.push("/admin/flights-today")
+    if (user.user) this.props.history.push("/")
     return (
       <Card small className="mb-4 col-7" style={halfTrans}>
         <CardHeader className="border-bottom" style={fullTrans}>
@@ -38,11 +37,11 @@ class Login extends Component {
           <Form>
             <Row form className="form-group pt-3">
               <FormInput
-                id="email"
-                placeholder="email"
+                id="username"
+                placeholder="username"
                 onChange={e => {
                   this.setState({
-                    email: e.target.value
+                    username: e.target.value
                   });
                 }}
                 style={quarterTrans}
@@ -63,7 +62,7 @@ class Login extends Component {
             </Row>
             <Row form>
               <Alert dismissible={false} open={user.error!=null} theme="danger">
-                {user.error && user.error.data.error.message}
+                {  user.error && user.error.response && user.error.response.data.error }
               </Alert>
             </Row>
             <Row form className="justify-content-end">
@@ -84,7 +83,7 @@ class Login extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.customerReducer
+    user: state.userReducer
   };
 };
 const mapDispatchToProps = dispatch => {
