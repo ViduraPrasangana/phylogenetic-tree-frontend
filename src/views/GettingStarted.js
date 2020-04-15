@@ -118,7 +118,7 @@ class GettingStarted extends Component {
                   className="files-dropzone  d-flex align-items-center justify-content-center"
                   onChange={this.onFilesChange}
                   onError={this.onFilesError}
-                  accepts={["image/png", ".fna", "audio/*"]}
+                  accepts={[".fna"]}
                   multiple
                   maxFiles={100}
                   maxFileSize={20000000} //1000=1kb
