@@ -10,7 +10,7 @@ const login = (username, password) => {
       password
     })
       .then(res => {
-        console.log(res)
+        Axios.defaults.headers.Authorization= "Token " + res.data.token
         dispatch(success(res.data ))
       })
       .catch(err => dispatch(failure(err)));
@@ -23,7 +23,7 @@ const login = (username, password) => {
     return { type: User.LOGIN, payload: user };
   }
   function failure(error) {
-    return { type: User.ERROR, payload: error };
+    return { type: User.LOGIN_ERROR, payload: error };
   }
 };
 
@@ -35,7 +35,11 @@ const register = (user) => {
         console.log(res)
         dispatch(success(res.data))
       })
-      .catch(err => dispatch(failure(err)));
+      .catch(err => {
+        console.log(err.response)
+        dispatch(failure(err))
+      }
+        );
   };
 
   function request() {
@@ -45,7 +49,7 @@ const register = (user) => {
     return { type: User.LOGIN, payload: user };
   }
   function failure(error) {
-    return { type: User.ERROR, payload: error };
+    return { type: User.REGISTER_ERROR, payload: error };
   }
 };
 const logout = () => {

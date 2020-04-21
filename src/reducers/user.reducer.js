@@ -2,7 +2,7 @@ import { User } from "../data/redux-constants";
 
 const initialUser = {
   user: null,
-  error: null
+  error: null,
 };
 
 export default (state = initialUser, action) => {
@@ -10,15 +10,22 @@ export default (state = initialUser, action) => {
     case User.LOGIN:
       return {
         user: action.payload,
+        registerError: null,
+        loginError: null
       };
     case User.LOGOUT:
       return {
-        user:null
+        user: null,
       };
-    case User.ERROR:
+    case User.REGISTER_ERROR:
       return {
         ...state,
-        error: action.payload
+        registerError: action.payload,
+      };
+    case User.LOGIN_ERROR:
+      return {
+        ...state,
+        loginError: action.payload,
       };
     default:
       return state;

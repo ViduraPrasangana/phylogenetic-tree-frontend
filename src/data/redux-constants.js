@@ -8,7 +8,8 @@ export const User =  {
     LOGIN_IN:"LOGIN_IN",
     LOGIN:"LOGIN",
     LOGOUT:"LOGOUT",
-    ERROR:"ERROR",
+    LOGIN_ERROR:"LOGIN_ERROR",
+    REGISTER_ERROR:"REGISTER_ERROR"
 }
 
 export const Requirement = {

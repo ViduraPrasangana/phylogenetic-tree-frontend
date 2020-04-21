@@ -107,7 +107,7 @@ class Register extends Component {
 
     const passEquals = password === confirmPassword;
     const { user } = this.props;
-    const fieldError = user.error?.response?.data;
+    const fieldError = user.registerError?.response?.data;
     return (
       <Card small className="mb-4 col-7" style={quarterTrans}>
         <CardHeader className="border-bottom" style={fullTrans}>

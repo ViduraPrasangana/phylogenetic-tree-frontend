@@ -64,9 +64,9 @@ class Home extends Component {
         </Row>
         <Row noGutters className="page-header py-4 justify-content-center">
           <PageTitle
-            sm="4"
+            sm="5"
             title="DNA analyzer"
-            subtitle="Now you can book your tickets from your home"
+            subtitle="Analyse, Visualize, Customize, Save, Modify any DNA Sequences"
             className="text-sm-center text-center absolute-center"
             titleClass="text-center text-white"
             subtitleClass="text-center"

@@ -18,6 +18,13 @@
     htmlBefore: '<i class="fas fa-users"></i>',
     htmlAfter: "",
     protect:true
+  },
+  {
+    title: "My DNAs",
+    to: "/my-dna-files",
+    htmlBefore: '<i class="fas fa-users"></i>',
+    htmlAfter: "",
+    protect:true
   }]
 
   const itemsLeft = [

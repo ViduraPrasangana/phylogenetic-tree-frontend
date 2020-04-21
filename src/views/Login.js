@@ -9,7 +9,7 @@ import {
   Button,
   FormFeedback,
   FormGroup,
-  Alert
+  Alert,
 } from "shards-react";
 import { halfTrans, fullTrans, quarterTrans } from "../data/constants";
 import { UserActions } from "../actions/user.actions";
@@ -19,15 +19,15 @@ import roles from "../data/roles";
 class Login extends Component {
   state = {
     username: "",
-    password: ""
+    password: "",
   };
   login = () => {
     const { username, password } = this.state;
     this.props.login(username, password);
   };
   render() {
-    const { user} = this.props
-    if (user.user) this.props.history.push("/")
+    const { user } = this.props;
+    if (user.user) this.props.history.push("/");
     return (
       <Card small className="mb-4 col-7" style={halfTrans}>
         <CardHeader className="border-bottom" style={fullTrans}>
@@ -39,9 +39,9 @@ class Login extends Component {
               <FormInput
                 id="username"
                 placeholder="username"
-                onChange={e => {
+                onChange={(e) => {
                   this.setState({
-                    username: e.target.value
+                    username: e.target.value,
                   });
                 }}
                 style={quarterTrans}
@@ -52,18 +52,26 @@ class Login extends Component {
                 id="password"
                 placeholder="password"
                 type="password"
-                onChange={e => {
+                onChange={(e) => {
                   this.setState({
-                    password: e.target.value
+                    password: e.target.value,
                   });
                 }}
                 style={quarterTrans}
               />
             </Row>
             <Row form>
-              <Alert dismissible={false} open={user.error!=null} theme="danger">
-                {  user.error && user.error.response && user.error.response.data.error }
-              </Alert>
+              {user.error && (
+                <Alert
+                  dismissible={false}
+                  open={user.loginError != null}
+                  theme="danger"
+                  style={{ borderRadius: 5 }}
+                >
+                  {user.loginError &&
+                    user.loginError.response?.data.error}
+                </Alert>
+              )}
             </Row>
             <Row form className="justify-content-end">
               <Button
@@ -81,16 +89,16 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.userReducer
+    user: state.userReducer,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     login: (username, password) => {
       dispatch(UserActions.login(username, password));
-    }
+    },
   };
 };
 
