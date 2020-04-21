@@ -188,7 +188,7 @@ class GettingStarted extends Component {
                   accepts={[".fna"]}
                   multiple
                   maxFiles={100}
-                  maxFileSize={20000000} //1000=1kb
+                  maxFileSize={20000000} 
                   minFileSize={0}
                   clickable
                   style={{ height: 100, width: "100%" }}
@@ -283,12 +283,5 @@ const mapStateToProps = (state) => {
     user: state.userReducer,
   };
 };
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     register: (user) => {
-//       dispatch(UserActions.register(user));
-//     }
-//   };
-// };
 
 export default connect(mapStateToProps)(GettingStarted);

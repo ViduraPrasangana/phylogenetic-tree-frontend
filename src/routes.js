@@ -73,14 +73,15 @@ export default [
     component: Samples,
   },
   {
-    exact:true,
-    layout: Errors,
-  },
-  {
     path: "/matrix",
     exact: true,
     layout: Main,
     component: Matrix,
-  }
+  },
+  {
+    exact:true,
+    layout: Errors,
+  },
+ 
 
 ];

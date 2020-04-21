@@ -24,27 +24,7 @@ const innerStyle = {
 class Home extends Component {
   state = {};
   componentDidMount() {
-    // this.props.getAllRoutes();
   }
-  search() {
-    const { selectedRoute, selectedDate } = this.state;
-    if (selectedDate !== null && selectedDate !== null) {
-      Axios.get(
-        config.host_url +
-          "schedule/" +
-          selectedRoute.toString() +
-          "/" +
-          moment(selectedDate).format("YYYY-MM-DD")
-      )
-        .then(result => {
-          this.setState({
-            flights: result.data.data
-          });
-        })
-        .catch(() => {});
-    }
-  }
-
 
   handleClickSamples = ()=>{
     this.props.history.push("\samples")

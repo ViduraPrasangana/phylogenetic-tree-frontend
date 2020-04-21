@@ -14,13 +14,6 @@ class PastVis extends Component {
     this.loadData();
   }
   loadData = () => {
-    /* 
-    title: "Docker Final"
-type: "MATRIX_GENERATION"
-process_id: 1
-method: "LSH"
-status: "PROGRESS"
-    */
     console.log(Axios.defaults.headers);
     Axios.get(config.host_url + "cluster/allProcesses/")
       .then((res) => {

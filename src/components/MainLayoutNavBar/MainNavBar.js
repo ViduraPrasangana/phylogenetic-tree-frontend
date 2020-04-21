@@ -60,13 +60,6 @@ class MainNavBar extends Component {
               <h4 className="d-none d-md-inline ml-1 bold text-white"><b>DNA</b></h4>
             </div>
           </NavbarBrand>
-
-          {/* <a
-            className="toggle-sidebar d-sm-inline d-md-none d-lg-none"
-            // onClick={this.handleToggleSidebar}
-          >
-            <i className="material-icons">&#xE5C4;</i>
-          </a> */}
           <NavItem>
             <ButtonGroup className="align-items-center">
               {itemsRight.map(element => {
