@@ -16,6 +16,7 @@ import Register from "./views/Register";
 import Errors from "./layouts/Error";
 import Main from "./layouts/Main";
 import Home from "./views/Home";
+import Matrix from "./views/Matrix"
 // import Tickets from "./views/Customer/Tickets";
 // import MyBookings from "./views/Customer/Bookings";
 // import Ticket from "./components/Ticket";
@@ -45,5 +46,12 @@ export default [
   {
     exact:true,
     layout: Errors,
+  },
+  {
+    path: "/matrix",
+    exact: true,
+    layout: Main,
+    component: Matrix,
   }
+
 ];
