@@ -8,7 +8,6 @@ import {
 } from "shards-react";
 import { halfTrans, fullTrans,} from "../data/constants";
 import { connect } from "react-redux";
-import roles from "../data/roles";
 
 
 class Samples extends Component {   
