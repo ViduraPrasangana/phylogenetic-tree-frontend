@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Container, Card, Row, Button, Col, FormInput, FormRadio } from "shards-react";
+import { Container, Card, Row, Button, Col, FormInput, FormRadio, Alert } from "shards-react";
 import Axios from "axios";
 import config from "../data/config";
 
@@ -76,7 +76,7 @@ class MyDNAs extends Component {
   };
 
   render() {
-    const { myDnaS, selected,title,method,startState } = this.state;
+    const { myDnaS, selected,title,method,startState,error } = this.state;
     return (
       <Container fluid className="overflow-scroll pb-4 change-scroll" style={{ height: "100%" }}>
         <Row className="justify-content-center pt-4 pb-2 mx-4">
@@ -105,6 +105,13 @@ class MyDNAs extends Component {
                 K-Mer method
               </FormRadio>
         </Row>
+        {error && (
+          <Row className="d-flex justify-content-center">
+            <Alert theme="danger" style={{ borderRadius: 5 }}>
+              {error}
+            </Alert>
+          </Row>
+        )}
         <Row className="d-flex justify-content-center">
           <Button
             theme="info"
