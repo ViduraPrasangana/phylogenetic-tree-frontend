@@ -3,6 +3,8 @@ import {
   Col,
   Card,
   CardHeader,
+  Row,
+  Container,
 } from "shards-react";
 import { halfTrans, fullTrans,} from "../data/constants";
 import { connect } from "react-redux";
@@ -11,11 +13,10 @@ import roles from "../data/roles";
 
 class Samples extends Component {   
   render() {
-    const { user} = this.props
-    if (user.user && user.user.role===roles.customer) this.props.history.push("/")
-    else if (user.user && user.user.role===roles.management) this.props.history.push("/admin/flights-today")
     return (
-      <Card small className="mb-auto col-8" style={halfTrans}>
+      <Container fluid className="overflow-scroll pb-4 change-scroll" style={{ height: "100%" }}>
+      <Row className="justify-content-center pt-4 pb-2 mx-4">
+        <Card small className="mb-auto col-8" style={halfTrans}>
         <CardHeader className="border-bottom" style={fullTrans}>
           <h3 className="text-center text-white">Try with samples</h3>
         </CardHeader>
@@ -47,7 +48,10 @@ class Samples extends Component {
             </table>       
         </Col>
       </Card>
-    );
+    
+        </Row>
+      </Container>
+      );
   }
 }
 
