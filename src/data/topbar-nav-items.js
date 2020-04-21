@@ -13,8 +13,15 @@
   //   htmlAfter: ""
   // },
   {
-    title: "My Bookings",
-    to: "/bookings",
+    title: "Past Visualizations",
+    to: "/past-vis",
+    htmlBefore: '<i class="fas fa-users"></i>',
+    htmlAfter: "",
+    protect:true
+  },
+  {
+    title: "My DNAs",
+    to: "/my-dna-files",
     htmlBefore: '<i class="fas fa-users"></i>',
     htmlAfter: "",
     protect:true

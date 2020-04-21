@@ -16,6 +16,9 @@ import Register from "./views/Register";
 import Errors from "./layouts/Error";
 import Main from "./layouts/Main";
 import Home from "./views/Home";
+import GettingStarted from "./views/GettingStarted";
+import PastVis from "./views/PastVis";
+import MyDNAs from "./views/MyDNAs";
 // import Tickets from "./views/Customer/Tickets";
 // import MyBookings from "./views/Customer/Bookings";
 // import Ticket from "./components/Ticket";
@@ -41,6 +44,24 @@ export default [
     exact: true,
     layout: Main,
     component: Home,
+  },
+  {
+    path: "/getting-started",
+    exact: true,
+    layout: Main,
+    component: GettingStarted,
+  },
+  {
+    path: "/past-vis",
+    exact: true,
+    layout: Main,
+    component: PastVis,
+  },
+  {
+    path: "/my-dna-files",
+    exact: true,
+    layout: Main,
+    component: MyDNAs,
   },
   {
     exact:true,
