@@ -16,6 +16,7 @@ import Register from "./views/Register";
 import Errors from "./layouts/Error";
 import Main from "./layouts/Main";
 import Home from "./views/Home";
+import Matrix from "./views/Matrix"
 import GettingStarted from "./views/GettingStarted";
 import PastVis from "./views/PastVis";
 import MyDNAs from "./views/MyDNAs";
@@ -66,5 +67,12 @@ export default [
   {
     exact:true,
     layout: Errors,
+  },
+  {
+    path: "/matrix",
+    exact: true,
+    layout: Main,
+    component: Matrix,
   }
+
 ];
