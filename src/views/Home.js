@@ -45,6 +45,11 @@ class Home extends Component {
     }
   }
 
+
+  handleClickSamples = ()=>{
+    this.props.history.push("\samples")
+  }
+
   handleGettingStarted=()=> {
     const { history } = this.props;
     history.push("/getting-started");
@@ -91,6 +96,7 @@ class Home extends Component {
               outline
               className="m-1"
               style={{ width: "200px" }}
+              onClick={this.handleClickSamples}
             >
               Try with samples
             </Button>

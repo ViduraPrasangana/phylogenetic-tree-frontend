@@ -11,6 +11,7 @@ import { Redirect } from "react-router-dom";
 import LoginLayout from "./layouts/LoginLayout";
 import Login from "./views/Login";
 import Register from "./views/Register";
+import Samples from "./views/Samples";
 // import AdminLogin from "./views/AdminLogin";
 // import StaticFlights from "./views/StaticFlights";
 import Errors from "./layouts/Error";
@@ -46,6 +47,7 @@ export default [
     component: Home,
   },
   {
+
     path: "/getting-started",
     exact: true,
     layout: Main,
@@ -62,6 +64,12 @@ export default [
     exact: true,
     layout: Main,
     component: MyDNAs,
+  },
+  {
+    path: "/samples",
+    exact: true,
+    layout: Main,
+    component: Samples,
   },
   {
     exact:true,
