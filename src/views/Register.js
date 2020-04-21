@@ -12,35 +12,28 @@ import {
   InputGroup,
   FormSelect,
   DatePicker,
-  Alert
+  Alert,
+  FormFeedback,
 } from "shards-react";
 
-import { getNames } from "country-list";
 import SimpleReactValidator from "simple-react-validator";
 import moment from "moment";
 import { quarterTrans, fullTrans } from "../data/constants";
 import Axios from "axios";
 import config from "../data/config";
+import { UserActions } from "../actions/user.actions";
+import { connect } from "react-redux";
 
-const now = new Date();
-const time = new Date();
-time.setFullYear(now.getFullYear() - 18);
-
-export default class Register extends Component {
+class Register extends Component {
   state = {
+    username: null,
     email: null,
     firstName: null,
     lastName: null,
     password: null,
     confirmPassword: null,
-    country: null,
-    gender: null,
-    nic: null,
-    date: time,
-    isErrorDate: false,
-    errorDate: "You should be 18+",
     registered: null,
-    message: ""
+    message: "",
   };
   constructor(props) {
     super(props);
@@ -53,44 +46,24 @@ export default class Register extends Component {
         firstName,
         lastName,
         password,
-        country,
-        gender,
-        nic,
-        date
+        username,
+        confirmPassword,
       } = this.state;
       const user = {
-        email,
+        username,
         first_name: firstName,
         last_name: lastName,
+        email,
         password,
-        country,
-        gender,
-        NIC: nic,
-        birthday: moment(date).format("YYYY-MM-DD")
+        confirm_password: confirmPassword,
       };
-      this.register(user);
+      this.props.register(user);
     }
   }
 
-  register = user => {
-    Axios.post(config.host_url + "customers", user)
-      .then(res =>
-        this.setState({ registered: true, message: "Registered Successfully" })
-      )
-      .catch(err => {
-        console.log(err.response.data.error.message);
-        this.setState({ registered: false, message:err.response.data.error.message });
-      });
-  };
   validate() {
     if (this.validator.allValid()) {
-      if (moment(this.state.date) > moment(time)) {
-        this.setState({
-          date: time
-        });
-      } else {
-        return true;
-      }
+      return true;
     } else {
       this.validator.showMessages();
       this.forceUpdate();
@@ -98,28 +71,23 @@ export default class Register extends Component {
     return false;
   }
 
-  validateDate = () => {
-    if (moment(this.state.date) > moment(time)) {
-      this.setState({
-        date: time
-      });
-    }
-  };
-
   render() {
     const {
       lastName,
       confirmPassword,
-      date,
       email,
       firstName,
       password,
-      gender,
-      nic,
+      username,
       registered,
-      message
+      message,
     } = this.state;
-    this.validateDate();
+    if (this.props.user.user) this.props.history.push("/");
+    const validUsername = this.validator.message(
+      "firstName",
+      username,
+      "required|alpha"
+    );
     const validFirstName = this.validator.message(
       "firstName",
       firstName,
@@ -134,17 +102,12 @@ export default class Register extends Component {
     const validPassword = this.validator.message(
       "password",
       password,
-      "required"
+      "required|min:6"
     );
-    const validPasswordConfirm = this.validator.message(
-      "passwordConfirm",
-      confirmPassword,
-      "required"
-    );
+
     const passEquals = password === confirmPassword;
-    const validGender = this.validator.message("gender", gender, "required");
-    console.log(this.state.nic);
-    // const validFirstName =  this.validator.message('firstName', this.state.firstName, 'required|alpha')
+    const { user } = this.props;
+    const fieldError = user.registerError?.response?.data;
     return (
       <Card small className="mb-4 col-7" style={quarterTrans}>
         <CardHeader className="border-bottom" style={fullTrans}>
@@ -153,27 +116,52 @@ export default class Register extends Component {
         <Col>
           <Form>
             <Row form className="form-group pt-3">
+              <Col md className="px-0">
+                <FormInput
+                  id="username"
+                  placeholder="username"
+                  onChange={(e) => {
+                    this.setState({ username: e.target.value });
+                  }}
+                  invalid={validUsername || fieldError?.username}
+                  style={quarterTrans}
+                />
+                <FormFeedback invalid>
+                  {validUsername?.props?.children}
+                  {fieldError?.username ? fieldError.username[0] : null}
+                </FormFeedback>
+              </Col>
+            </Row>
+            <Row form className="form-group">
               <Col md className="pl-0">
                 <FormInput
                   id="firstName"
                   placeholder="First Name"
-                  onChange={e => {
+                  onChange={(e) => {
                     this.setState({ firstName: e.target.value });
                   }}
-                  invalid={validFirstName}
+                  invalid={validFirstName || fieldError?.first_name}
                   style={quarterTrans}
                 />
+                <FormFeedback invalid>
+                  {validFirstName?.props?.children}
+                  {fieldError?.first_name ? fieldError.first_name[0] : null}
+                </FormFeedback>
               </Col>
               <Col md className="pr-0">
                 <FormInput
                   id="lastName"
                   placeholder="Last Name"
-                  onChange={e => {
+                  onChange={(e) => {
                     this.setState({ lastName: e.target.value });
                   }}
-                  invalid={validLastName}
+                  invalid={validLastName || fieldError?.last_name}
                   style={quarterTrans}
                 />
+                <FormFeedback invalid>
+                  {validLastName?.props?.children}
+                  {fieldError?.last_name ? fieldError.last_name[0] : null}
+                </FormFeedback>
               </Col>
             </Row>
             <Row form className="form-group">
@@ -184,12 +172,16 @@ export default class Register extends Component {
                 <FormInput
                   id="email"
                   placeholder="email"
-                  onChange={e => {
+                  onChange={(e) => {
                     this.setState({ email: e.target.value });
                   }}
-                  invalid={validEmail}
+                  invalid={validEmail || fieldError?.email}
                   style={quarterTrans}
                 />
+                <FormFeedback invalid>
+                  {validEmail?.props?.children}
+                  {fieldError?.email ? fieldError.email[0] : null}
+                </FormFeedback>
               </InputGroup>
             </Row>
             <Row form className="pb-3">
@@ -197,97 +189,39 @@ export default class Register extends Component {
                 id="password"
                 type="password"
                 placeholder="Password"
-                onChange={e => {
+                onChange={(e) => {
                   this.setState({ password: e.target.value });
                 }}
-                invalid={validPassword}
+                invalid={validPassword || fieldError?.password}
                 style={quarterTrans}
               />
+              <FormFeedback invalid>
+                {validPassword?.props?.children}
+                {fieldError?.password ? fieldError.password[0] : null}
+              </FormFeedback>
             </Row>
             <Row form className="pb-3">
               <FormInput
                 id="confirmPassword"
                 type="password"
                 placeholder="Confirm Password"
-                onChange={e => {
+                onChange={(e) => {
                   this.setState({ confirmPassword: e.target.value });
                 }}
                 style={quarterTrans}
-                invalid={
-                  validPasswordConfirm ||
-                  (confirmPassword !== null && !passEquals)
-                }
+                invalid={confirmPassword !== null && !passEquals}
               />
+              <FormFeedback invalid>
+                {confirmPassword !== null &&
+                  !passEquals &&
+                  "Passwords does not match"}
+              </FormFeedback>
             </Row>
 
-            <Row form className="form-group">
-              <Col md className="pl-0">
-                <FormSelect
-                  onChange={e => {
-                    this.setState({
-                      gender: e.target.value
-                    });
-                  }}
-                  invalid={validGender}
-                  style={quarterTrans}
-                >
-                  <option selected disabled value="">
-                    Gender
-                  </option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </FormSelect>
-              </Col>
-              <Col>
-                <DatePicker
-                  placeholderText="Birth Date"
-                  selected={date}
-                  className=""
-                  style={quarterTrans}
-                  onChange={e => {
-                    this.setState({
-                      date: new Date(e)
-                    });
-                  }}
-                />
-              </Col>
-            </Row>
-            <Row form className="pb-3">
-              <FormInput
-                id="nic"
-                placeholder="NIC"
-                value={nic}
-                style={quarterTrans}
-                onChange={e => {
-                  this.setState({
-                    nic: e.target.value
-                  });
-                }}
-              />
-            </Row>
-            <Row form>
-              <FormSelect
-                style={quarterTrans}
-                onChange={e => {
-                  this.setState({
-                    country: e.target.value
-                  });
-                }}
-              >
-                <option selected disabled value="">
-                  Choose your Country
-                </option>
-                {getNames().map((country, index) => (
-                  <option key={index} value={country}>
-                    {country}
-                  </option>
-                ))}
-              </FormSelect>
-            </Row>
             <Row form className="pt-2 pb-0">
               <Alert
                 dismissible={true}
-                style={{width:"100%"}}
+                style={{ width: "100%" }}
                 open={registered !== null}
                 theme={registered === false ? "danger" : "success"}
               >
@@ -311,3 +245,17 @@ export default class Register extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    user: state.userReducer,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    register: (user) => {
+      dispatch(UserActions.register(user));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
