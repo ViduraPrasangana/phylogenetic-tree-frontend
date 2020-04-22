@@ -17,10 +17,12 @@ import Samples from "./views/Samples";
 import Errors from "./layouts/Error";
 import Main from "./layouts/Main";
 import Home from "./views/Home";
+import GraphScreen from "./views/GraphScreen";
 import Matrix from "./views/Matrix"
 import GettingStarted from "./views/GettingStarted";
 import PastVis from "./views/PastVis";
 import MyDNAs from "./views/MyDNAs";
+
 // import Tickets from "./views/Customer/Tickets";
 // import MyBookings from "./views/Customer/Bookings";
 // import Ticket from "./components/Ticket";
@@ -48,7 +50,11 @@ export default [
     component: Home,
   },
   {
-
+    path: "/graph",
+    exact: true,
+    layout: Main,
+    component: GraphScreen,
+  },{
     path: "/getting-started",
     exact: true,
     layout: Main,

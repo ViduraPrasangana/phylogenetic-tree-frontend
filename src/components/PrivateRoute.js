@@ -14,6 +14,7 @@ class PrivateRoute extends React.Component {
         {...rest}
         render={props => {
           const currentUser = user.user;
+
           if (
             !currentUser &&
             rest.location.pathname !== "/login" &&

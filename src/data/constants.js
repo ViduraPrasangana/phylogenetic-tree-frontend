@@ -23,10 +23,12 @@ export const bgStyle = backgroundImage => ({
   minHeight: "100%",
   backgroundAttachment: "fixed",
   height: "100%",
-  overflow: "hidden",
-  // overflowY: "scroll"
+  
 });
-
+export const scrollHide = {
+overflow: "hidden",
+overflowY: "scroll"
+}
 export const seats = [
   {
     seatNumber: "1A",

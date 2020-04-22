@@ -2,12 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "shards-react";
 import MainNavBar from "../components/MainLayoutNavBar/MainNavBar";
-import { bgStyle } from "../data/constants";
+import { bgStyle ,scrollHide} from "../data/constants";
 import backgroundImage from "../assets/images/home_background_1.jpg";
 
 const Main = ({ children, noNavbar, noFooter, history }) => (
-  <Container fluid className="change-scroll" style={{...bgStyle(backgroundImage)}}>
-    <Row style={{ height: "100%"}} className="overflow-hidden">
+  <Container fluid className="change-scroll overflow-scroll" style={{...bgStyle(backgroundImage),...scrollHide}}>
+    <Row style={{ height: "100%"}} >
       <Col
         className="main-content p-0"
         sm="12"
