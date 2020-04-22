@@ -50,7 +50,7 @@ class Home extends Component {
         <Row noGutters className="page-header py-4 justify-content-center">
           <PageTitle
             sm="5"
-            title="DNA analyzer"
+            title="Phylogentic Tree Visualizer"
             subtitle="Analyse, Visualize, Customize, Save, Modify any DNA Sequences"
             className="text-sm-center text-center absolute-center"
             titleClass="text-center text-white"

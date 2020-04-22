@@ -73,7 +73,7 @@ export default [
     component: Samples,
   },
   {
-    path: "/matrix",
+    path: "/matrix/:process_id",
     exact: true,
     layout: Main,
     component: Matrix,

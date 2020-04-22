@@ -8,9 +8,12 @@ import {
 } from "shards-react";
 import { halfTrans, fullTrans,} from "../data/constants";
 import { connect } from "react-redux";
+import Axios from "axios";
+import config from "../data/config";
 
 
 class Samples extends Component {   
+
   render() {
     return (
       <Container fluid className="overflow-scroll pb-4 change-scroll" style={{ height: "100%" }}>
