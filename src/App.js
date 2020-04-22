@@ -9,10 +9,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./shards-dashboard/styles/shards-dashboards.1.1.0.min.css";
 import 'rc-time-picker/assets/index.css';
 import PrivateRoute from "./components/PrivateRoute";
-import Graph from "./components/Graph";
-import GraphScreen from "./views/GraphScreen";
+import { useSelector } from "react-redux";
+import Axios from "axios";
 
 function App() {
+  const user = useSelector(state => state.userReducer);
+  if(user.user){
+    Axios.defaults.headers.Authorization = "Token "+user.user.token
+  }
   return (
     <Router>
       <div>

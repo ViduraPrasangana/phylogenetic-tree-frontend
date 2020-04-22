@@ -17,19 +17,21 @@ import UserActions from "../layout/MainNavbar/NavbarNav/UserActions";
 import { connect } from "react-redux";
 import LoginButton from "../LoginButton";
 import RegisterButton from "../RegisterButton";
+import PastVis from "../../views/PastVis";
+import MyDNAs from "../../views/MyDNAs";
 class MainNavBar extends Component {
   state = {
     current: ""
   };
 
   selectMenu() {
-    // const { current } = this.state;
-    // const { comp } = this.props;
-    // if (comp.type == Home && current !== "/") this.setState({ current: "/" });
-    // else if (comp.type == Tickets && current !== "/tickets")
-    //   this.setState({ current: "/tickets" });
-    // else if (comp.type == Bookings && current !== "/bookings")
-    //   this.setState({ current: "/bookings" });
+    const { current } = this.state;
+    const { comp } = this.props;
+    if (comp.type != PastVis && comp.type != MyDNAs && current !== "") this.setState({ current: "" });
+    else if (comp.type == PastVis && current !== "/past-vis")
+      this.setState({ current: "/past-vis" });
+    else if (comp.type == MyDNAs && current !== "/my-dna-files")
+      this.setState({ current: "/my-dna-files" });
   }
   render() {
     const { current } = this.state;
@@ -55,16 +57,9 @@ class MainNavBar extends Component {
                 alt="DNA logo"
               />
 
-              <h4 className="d-none d-md-inline ml-1 bold text-white"><b>DNA</b></h4>
+              <h5 className="d-none d-md-inline ml-1 bold text-white"><b>Phylogentic Tree Visualizer</b></h5>
             </div>
           </NavbarBrand>
-
-          {/* <a
-            className="toggle-sidebar d-sm-inline d-md-none d-lg-none"
-            // onClick={this.handleToggleSidebar}
-          >
-            <i className="material-icons">&#xE5C4;</i>
-          </a> */}
           <NavItem>
             <ButtonGroup className="align-items-center">
               {itemsRight.map(element => {
@@ -99,7 +94,7 @@ class MainNavBar extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.customerReducer.user
+    user: state.userReducer.user
   };
 };
 

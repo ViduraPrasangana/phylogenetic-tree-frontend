@@ -7,8 +7,9 @@ import { persistStore, persistReducer } from "redux-persist";
 
 const persistConfig = {
   key: "root",
-  blacklist: ['requirementsReducer','flightsTodayReducer',"staticFlightsReducer","reportsReducer"],
-  storage
+  blacklist: [],
+  storage,
+  timeout: null,
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

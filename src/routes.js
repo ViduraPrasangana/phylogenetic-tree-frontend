@@ -11,12 +11,18 @@ import { Redirect } from "react-router-dom";
 import LoginLayout from "./layouts/LoginLayout";
 import Login from "./views/Login";
 import Register from "./views/Register";
+import Samples from "./views/Samples";
 // import AdminLogin from "./views/AdminLogin";
 // import StaticFlights from "./views/StaticFlights";
 import Errors from "./layouts/Error";
 import Main from "./layouts/Main";
 import Home from "./views/Home";
 import GraphScreen from "./views/GraphScreen";
+import Matrix from "./views/Matrix"
+import GettingStarted from "./views/GettingStarted";
+import PastVis from "./views/PastVis";
+import MyDNAs from "./views/MyDNAs";
+
 // import Tickets from "./views/Customer/Tickets";
 // import MyBookings from "./views/Customer/Bookings";
 // import Ticket from "./components/Ticket";
@@ -48,9 +54,40 @@ export default [
     exact: true,
     layout: Main,
     component: GraphScreen,
+  },{
+    path: "/getting-started",
+    exact: true,
+    layout: Main,
+    component: GettingStarted,
+  },
+  {
+    path: "/past-vis",
+    exact: true,
+    layout: Main,
+    component: PastVis,
+  },
+  {
+    path: "/my-dna-files",
+    exact: true,
+    layout: Main,
+    component: MyDNAs,
+  },
+  {
+    path: "/samples",
+    exact: true,
+    layout: Main,
+    component: Samples,
+  },
+  {
+    path: "/matrix/:process_id",
+    exact: true,
+    layout: Main,
+    component: Matrix,
   },
   {
     exact:true,
     layout: Errors,
-  }
+  },
+ 
+
 ];
