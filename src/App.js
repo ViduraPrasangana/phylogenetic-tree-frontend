@@ -1,7 +1,6 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-
 import { BrowserRouter as Router, Route,Switch } from "react-router-dom";
 import routes from "./routes";
 import withTracker from "./withTracker";
@@ -12,6 +11,7 @@ import 'rc-time-picker/assets/index.css';
 import PrivateRoute from "./components/PrivateRoute";
 import { useSelector } from "react-redux";
 import Axios from "axios";
+
 function App() {
   const user = useSelector(state => state.userReducer);
   if(user.user){
@@ -38,6 +38,7 @@ function App() {
             />
           );
         })}
+        
         </Switch>
       </div>
     </Router>

@@ -41,7 +41,7 @@ class GettingStarted extends Component {
       {
         object_key: file.name,
         file_name: file.name.substring(0, file.name.length - 4),
-        size: parseInt(file.size / 1024),
+        size: parseInt(file.size / (1024*1024)),
       },
       { headers: { Authorization: "Token " + user.token } }
     )
@@ -51,7 +51,6 @@ class GettingStarted extends Component {
         file.error = err.response?.data?.non_field_errors
           ? err.response.data.non_field_errors[0]
           : "Something went wrong";
-
         if ("This file already exist!" === file.error) {
           const { uploadedList } = this.state;
           uploadedList.push(file.name.substring(0, file.name.length - 4));
@@ -131,6 +130,7 @@ class GettingStarted extends Component {
             startState:false,
             error:null
           })
+          this.props.history.push("/matrix/"+res.data.process.process_id)
           console.log(res);
         })
         .catch((err) => {
@@ -188,7 +188,7 @@ class GettingStarted extends Component {
                   accepts={[".fna"]}
                   multiple
                   maxFiles={100}
-                  maxFileSize={20000000} //1000=1kb
+                  maxFileSize={20000000} 
                   minFileSize={0}
                   clickable
                   style={{ height: 100, width: "100%" }}
@@ -283,12 +283,5 @@ const mapStateToProps = (state) => {
     user: state.userReducer,
   };
 };
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     register: (user) => {
-//       dispatch(UserActions.register(user));
-//     }
-//   };
-// };
 
 export default connect(mapStateToProps)(GettingStarted);

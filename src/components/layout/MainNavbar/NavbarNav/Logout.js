@@ -12,7 +12,6 @@ class Logout extends React.Component {
 
   render() {
     return (
-      // <NavItem className="border-right dropdown notifications border-left">
       
         <NavLink
           className="nav-link-icon text-center"
@@ -22,7 +21,6 @@ class Logout extends React.Component {
             <i class="text-danger material-icons"><IoIosLogOut/></i>
           </div>
         </NavLink>
-      // </NavItem>
     );
   }
 }

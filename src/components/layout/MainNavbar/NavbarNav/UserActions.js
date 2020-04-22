@@ -33,7 +33,6 @@ class UserActions extends React.Component {
   render() {
     const { user } = this.props.user;
     return (
-      // <NavItem  toggle={this.toggleUserActions}>
       <NavLink className="text-nowrap px-3">
         <Row>
           <Col>
@@ -61,8 +60,6 @@ class UserActions extends React.Component {
           </Col>
         </Row>
       </NavLink>
-
-      // </NavItem>
     );
   }
 }

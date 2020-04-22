@@ -24,12 +24,6 @@ export default ()=>{
             htmlBefore:'<i class="fas fa-file-alt"></i>',
             htmlAfter:"",
         },
-        // {
-        //     title:"Bookings",
-        //     to:"/admin/bookings",
-        //     htmlBefore:'<i class="fas fa-bookmark"></i>',
-        //     htmlAfter:"",
-        // },
         {
             title:"Flights History",
             to:"/admin/flights-history",

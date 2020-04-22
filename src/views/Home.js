@@ -24,25 +24,10 @@ const innerStyle = {
 class Home extends Component {
   state = {};
   componentDidMount() {
-    // this.props.getAllRoutes();
   }
-  search() {
-    const { selectedRoute, selectedDate } = this.state;
-    if (selectedDate !== null && selectedDate !== null) {
-      Axios.get(
-        config.host_url +
-          "schedule/" +
-          selectedRoute.toString() +
-          "/" +
-          moment(selectedDate).format("YYYY-MM-DD")
-      )
-        .then(result => {
-          this.setState({
-            flights: result.data.data
-          });
-        })
-        .catch(() => {});
-    }
+
+  handleClickSamples = ()=>{
+    this.props.history.push("\samples")
   }
 
   handleGettingStarted=()=> {
@@ -65,7 +50,7 @@ class Home extends Component {
         <Row noGutters className="page-header py-4 justify-content-center">
           <PageTitle
             sm="5"
-            title="DNA analyzer"
+            title="Phylogentic Tree Visualizer"
             subtitle="Analyse, Visualize, Customize, Save, Modify any DNA Sequences"
             className="text-sm-center text-center absolute-center"
             titleClass="text-center text-white"
@@ -91,6 +76,7 @@ class Home extends Component {
               outline
               className="m-1"
               style={{ width: "200px" }}
+              onClick={this.handleClickSamples}
             >
               Try with samples
             </Button>

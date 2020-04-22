@@ -14,13 +14,6 @@ class PastVis extends Component {
     this.loadData();
   }
   loadData = () => {
-    /* 
-    title: "Docker Final"
-type: "MATRIX_GENERATION"
-process_id: 1
-method: "LSH"
-status: "PROGRESS"
-    */
     console.log(Axios.defaults.headers);
     Axios.get(config.host_url + "cluster/allProcesses/")
       .then((res) => {
@@ -43,7 +36,7 @@ status: "PROGRESS"
     return (
       <Container fluid className="overflow-scroll pb-4 change-scroll" style={{ height: "100%" }}>
         <Row className="justify-content-center p-5 ">
-          <Col className="col-6">
+          <Col className="col-12 col-lg-6">
             <Card>
             <CardHeader className="text-center h5 border-bottom text-black font-weight-bold">
               Matrices
@@ -67,11 +60,13 @@ status: "PROGRESS"
                   {matrixList.map((e, i) => {
                     return (
                       <tr key={i}>
-                        <td className="pl-4">{e.title}</td>
-                        <td className="pl-4">{e.method}</td>
-                        <td className="pl-4">{e.status}</td>
+                        <td className="pl-4 text-center">{e.title}</td>
+                        <td className="pl-4 text-center">{e.method}</td>
+                        <td className="pl-4 text-center">{e.status}</td>
                         <td>
-                          <Button onClick={() => {}} theme={"primary"}>
+                          <Button onClick={() => {
+                            this.props.history.push("/matrix/"+e.process_id)
+                          }} theme={"primary"}>
                             Open
                           </Button>
                         </td>
@@ -82,7 +77,7 @@ status: "PROGRESS"
               </table>
             </Card>
           </Col>
-          <Col className="col-6">
+          <Col className="col-12 col-lg-6">
             <Card>
             <CardHeader className="text-center h5 border-bottom text-black font-weight-bold">
               Tree Visualizations
@@ -106,11 +101,13 @@ status: "PROGRESS"
                   {treeList.map((e, i) => {
                     return (
                       <tr key={i}>
-                        <td className="pl-4">{e.title}</td>
-                        <td className="pl-4">{e.method}</td>
-                        <td className="pl-4">{e.status}</td>
+                        <td className="pl-4 text-center">{e.title}</td>
+                        <td className="pl-4 text-center">{e.method}</td>
+                        <td className="pl-4 text-center">{e.status}</td>
                         <td>
-                          <Button onClick={() => {}} theme={"primary"}>
+                          <Button onClick={() => {
+                            this.props.history.push("/tree/"+e.process_id)
+                          }}  theme={"primary"}>
                             Open
                           </Button>
                         </td>

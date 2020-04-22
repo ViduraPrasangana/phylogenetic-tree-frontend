@@ -62,6 +62,7 @@ class MyDNAs extends Component {
             startState:false,
             error:null
           })
+          this.props.history.push("/matrix/"+res.data.process.process_id)
           console.log(res);
         })
         .catch((err) => {
@@ -128,7 +129,7 @@ class MyDNAs extends Component {
                 <thead>
                   <tr>
                     <th scope="col" className="border-0 pl-4">
-                      Name
+                      Specie Name
                     </th>
                     <th scope="col" className="border-0">
                       Status
@@ -137,13 +138,15 @@ class MyDNAs extends Component {
                 </thead>
                 <tbody>
                   {myDnaS.map((e, i) => {
+                    const include = selected.includes(e.file_name)
                     return (
                       <tr key={i}>
-                        <td className="pl-4">{e.file_name}</td>
+                        <td className="pl-4">{e.file_name+" ("+e.size+"MB)"}</td>
                         <td>
                           <Button
+                          outline={!include}
                             onClick={() => {
-                              if (selected.includes(e.file_name))
+                              if (include)
                                 selected.splice(
                                   selected.indexOf(e.file_name),
                                   1
@@ -151,13 +154,16 @@ class MyDNAs extends Component {
                               else selected.push(e.file_name);
                               this.setState({ selected });
                             }}
+                            style={{
+                              width:100
+                            }}
                             theme={
-                              selected.includes(e.file_name)
+                              include
                                 ? "primary"
                                 : "secondary"
                             }
                           >
-                            {selected.includes(e.file_name)
+                            {include
                               ? "Selected"
                               : "Select"}
                           </Button>

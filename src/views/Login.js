@@ -14,7 +14,6 @@ import {
 import { halfTrans, fullTrans, quarterTrans } from "../data/constants";
 import { UserActions } from "../actions/user.actions";
 import { connect } from "react-redux";
-import roles from "../data/roles";
 
 class Login extends Component {
   state = {
