@@ -15,7 +15,7 @@ function Links({
   fontSize,
   linkColor
 }) {
-  const parentGap = fontSize * 0.7;
+  const parentGap = fontSize * 0.9;
   return (
     <NodeGroup
       data={links}

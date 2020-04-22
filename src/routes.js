@@ -50,7 +50,7 @@ export default [
     component: Home,
   },
   {
-    path: "/graph",
+    path: "/tree/:process_id",
     exact: true,
     layout: Main,
     component: GraphScreen,

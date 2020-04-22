@@ -1,5 +1,5 @@
 export default {
-  name: 'T',
+  name: 'B',
   children: [
     {
       name: 'A',
@@ -8,13 +8,13 @@ export default {
         { name: 'A2 rgerg ',color:"#f20000" },
         { name: 'A3' },
         {
-          name: 'C',
+          name: 'A',
           children: [
             {
               name: 'C1ggg '
             },
             {
-              name: 'D',
+              name: 'A',
               children: [
                 {
                   name: 'D1fffffffffffff'
@@ -33,7 +33,7 @@ export default {
     },
     { name: 'Z' },
     {
-      name: 'B',
+      name: 'A',
       children: [{ name: 'B1' }, { name: 'B2' }, { name: 'B3' }]
     }
   ]

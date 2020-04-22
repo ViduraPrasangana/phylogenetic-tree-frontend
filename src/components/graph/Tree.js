@@ -129,8 +129,8 @@ export default class extends React.Component {
     } else {
       origin = { x: 0, y: 0 };
       if (orientation === "vertical") {
-        sizeWidth = innerWidth * linkWidthPercentage;
-        sizeHeight = innerHeight * linkHeightPercentage;
+        sizeWidth = innerWidth * linkHeightPercentage;
+        sizeHeight = innerHeight * linkWidthPercentage;
       } else {
         sizeWidth = innerHeight * linkHeightPercentage;
         sizeHeight = innerWidth * linkWidthPercentage;
@@ -295,7 +295,7 @@ export default class extends React.Component {
               <Col className="col-6 col-md-3">
                 <div >
                   <label>
-                    <b>Link width</b>
+                    <b>Link length</b>
                   </label>
                   <Slider
                     theme="success"
@@ -314,7 +314,7 @@ export default class extends React.Component {
               <Col className="col-6 col-md-3">
                <div>
                   <label>
-                    <b>Link height</b>
+                    <b>Link gap</b>
                   </label>
                   <Slider
                     theme="success"
@@ -330,7 +330,6 @@ export default class extends React.Component {
                   />
                 </div>
               </Col>
-
               <Col className="col-6 col-md-3">
                 <div>
                   <label>
@@ -352,7 +351,7 @@ export default class extends React.Component {
               </Col>
 
               <Col className="col-6 col-md-3">
-               <div>
+               {/* <div>
                   <label>
                     <b>Link Gap</b>
                   </label>
@@ -369,7 +368,7 @@ export default class extends React.Component {
                     // value={stepPercent}
                     // disabled={layout === "polar"}
                   />
-                </div>
+                </div> */}
               </Col>
             </Row>
             
@@ -417,14 +416,14 @@ export default class extends React.Component {
                     const imgData = canvas.toDataURL('image/png');
     const pdf = new jsPDF({orientation: 'landscape'});
     pdf.addImage(imgData, 'PNG', 0, 0);
-    pdf.save("download.pdf");  
+    pdf.save("tree-visualization.pdf");  
                   })
                 }}
               >
                 Download as PDF
               </Button>
               <ReactToPrint
-                trigger={() => <Button className="mx-3" onClick={() => {}}>Print ticket</Button>}
+                trigger={() => <Button className="mx-3" onClick={() => {}}>Print Visualization</Button>}
                 content={() => this.canvas}
               />
             </Row>

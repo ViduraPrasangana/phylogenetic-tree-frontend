@@ -105,7 +105,9 @@ class PastVis extends Component {
                         <td className="pl-4 text-center">{e.method}</td>
                         <td className="pl-4 text-center">{e.status}</td>
                         <td>
-                          <Button onClick={() => {}} theme={"primary"}>
+                          <Button onClick={() => {
+                            this.props.history.push("/tree/"+e.process_id)
+                          }}  theme={"primary"}>
                             Open
                           </Button>
                         </td>

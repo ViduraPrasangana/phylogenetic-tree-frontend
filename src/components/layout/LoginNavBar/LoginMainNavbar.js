@@ -30,7 +30,7 @@ const LoginMainNavbar = ({ layout, stickyTop }) => {
               alt="DNA logo"
               
             />
-            <h4 className="d-none d-md-inline ml-1 text-black"><b>DNA</b></h4>
+            <h4 className="d-none d-md-inline ml-1 text-black"><b>Phylogentic Tree Visualizer</b></h4>
           </div>
         </NavbarBrand>
       </Navbar>

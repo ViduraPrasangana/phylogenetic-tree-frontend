@@ -130,6 +130,7 @@ class GettingStarted extends Component {
             startState:false,
             error:null
           })
+          this.props.history.push("/matrix/"+res.data.process.process_id)
           console.log(res);
         })
         .catch((err) => {

@@ -66,6 +66,7 @@ updateWindowDimensions=()=> {
             this.setState({
               status: "PROGRESS",
             });
+            setTimeout(()=>this.loadMatrix(id))
           }
         });
     } else {
@@ -105,6 +106,7 @@ updateWindowDimensions=()=> {
         this.setState({
           startState: false,
         });
+        this.props.history.push("/tree/"+res.data.process.process_id)
         console.log(res);
       })
       .catch((err) => {

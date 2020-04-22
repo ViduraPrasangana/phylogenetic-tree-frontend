@@ -44,7 +44,7 @@ function Node({ node, onClick, orientation, fontSize, color }) {
           <Fragment>
             {(node.depth === 0 || node.data.children) && (
               <circle
-                r={fontSize * 0.7}
+                r={fontSize * 0.9}
                 fill="url('#lg')"
                 onClick={onClick}
                 onMouseMove={e => dragMove(e)}
