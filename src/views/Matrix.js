@@ -66,7 +66,7 @@ updateWindowDimensions=()=> {
             this.setState({
               status: "PROGRESS",
             });
-            setTimeout(()=>this.loadMatrix(id))
+            setTimeout(()=>this.loadMatrix(id),10000)
           }
         });
     } else {
