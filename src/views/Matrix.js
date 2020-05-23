@@ -26,7 +26,6 @@ class Matrix extends Component {
   constructor(props){
     super(props)
     this.loadMatrix(this.props.match.params.process_id);
-    
   }
   componentDidMount() {
     this.updateWindowDimensions();
@@ -56,9 +55,11 @@ updateWindowDimensions=()=> {
             columns: res.data.matrix[0],
             data: res.data.matrix[1],
             process: res.data.process,
-            result_id: res.data.result_id,
+            result_id: res.data.matrix_result_id,
           });
-          console.log(res.data);
+          if(res.data.status==="PROGRESS"){
+            setTimeout(() => this.loadMatrix(id), 10000);
+          }
         })
         .catch((error) => {
           console.log("thi is err",error);
@@ -96,11 +97,12 @@ updateWindowDimensions=()=> {
     this.setState({
       startState: true,
     });
-    const { process, result_id } = this.state;
+    const { process, result_id,matrix_process_id } = this.state;
     console.log(result_id)
-    Axios.post(config.host_url + "cluster/lsh/tree/generate/", {
+    Axios.post(config.host_url + "cluster/tree/generate/", {
+      matrix_process_id:result_id,
       title: process.title,
-      result_id,
+      type:process.type,
     })
       .then((res) => {
         this.setState({
@@ -144,7 +146,7 @@ updateWindowDimensions=()=> {
           {status === "SUCCESS" && (
             <Card>
               <CardHeader className="text-center">
-                Distance Matrix - {process.title} - {process.method} Method
+                Distance Matrix - {process.title} - {process.type} Method
               </CardHeader>
               <table className="table">
                 <thead>
@@ -156,7 +158,7 @@ updateWindowDimensions=()=> {
                           className="text-center border"
                           style={{ maxWidth: mxwdth }}
                         >
-                          {e}
+                          {e.split("_").join(" ")}
                         </th>
                       );
                     })}
@@ -167,7 +169,7 @@ updateWindowDimensions=()=> {
                     return (
                       <tr  className="text-center">
                         <th className="border" style={{ maxWidth: mxwdth }}>
-                          {columns[i]}
+                          {columns[i].split("_").join(" ")}
                         </th>
                         {e.map((ele, index) => {
                           return (
@@ -175,7 +177,7 @@ updateWindowDimensions=()=> {
                               className="border"
                               style={{ maxWidth: mxwdth }}
                             >
-                              {ele}
+                              {Number((ele).toFixed(4))}
                             </td>
                           );
                         })}

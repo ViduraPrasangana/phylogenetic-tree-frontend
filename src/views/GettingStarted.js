@@ -26,7 +26,12 @@ class GettingStarted extends Component {
     startState:false,
   };
   onFilesChange = (files) => {
-    this.setState({ selectedFiles: files });
+    var newFiles = []
+    files.forEach(file => {
+      var new_file = new File([file], file.name.split(" ").join("_"));
+      newFiles.push(new_file)
+    });
+    this.setState({ selectedFiles: newFiles });
   };
 
   onFilesError = (error, file) => {
@@ -65,7 +70,6 @@ class GettingStarted extends Component {
     Axios.put(res.data.url, file, {
       headers: {
         "Content-Type": file.type,
-        
       },
       onUploadProgress: (progress) => {
         file.progress = (progress.loaded * 100) / progress.total;
@@ -120,10 +124,12 @@ class GettingStarted extends Component {
         startState:true,
         error:null
       })
-      const { title, uploadedList } = this.state;
-      Axios.post(config.host_url + "cluster/lsh/matrix/generate/", {
+      const { title, uploadedList,method } = this.state;
+      Axios.post(config.host_url + "cluster/matrix/generate/", {
         title,
         file_names: uploadedList,
+        is_default_user:false,
+        type:method,
       })
         .then((res) => {
           this.setState({
@@ -211,7 +217,7 @@ class GettingStarted extends Component {
                       key={index}
                     >
                       <Row className="justify-content-between px-4">
-                        <label className="m-0">{element.name}</label>
+                        <label className="m-0">{element.name.split("_").join(" ")}</label>
                         <Button
                           onClick={() => this.getUploadLink(element)}
                           disabled={uploaded || error}
@@ -248,8 +254,8 @@ class GettingStarted extends Component {
               </FormRadio>
               <div style={{ width: 20 }} />
               <FormRadio
-                checked={method === "K-MER"}
-                onClick={() => this.setState({ method: "K-MER" })}
+                checked={method === "KMER"}
+                onClick={() => this.setState({ method: "KMER" })}
               >
                 K-Mer method
               </FormRadio>

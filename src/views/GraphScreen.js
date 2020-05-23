@@ -46,10 +46,12 @@ class GraphScreen extends Component {
 
           this.setState({
             data: addNamesToTree(res.data.tree, 1,1),
-            process: res.data.process,
+            process: res.data,
             result_id: res.data.result_id,
+            status:res.data.status
           });
           console.log(res.data);
+          setTimeout(() => this.loadTree(id), 10000);
         })
         .catch((error) => {
           console.log("thi is err", error.response);
@@ -72,8 +74,8 @@ class GraphScreen extends Component {
       {data && <Row className="justify-content-center">
         <h4 style={{color:"white"}}>Tree Visualization - {process.title}</h4>
       </Row>}
-        {data && <Tree data={data} width={width * 0.9} height={height * 0.7} />}
-        {!data && status !== "SUCCESS" && (
+        {data && status === "SUCCESS" &&<Tree data={data} width={width * 0.9} height={height * 0.7} />}
+        {!data || status !== "SUCCESS" && (
           <Row className="d-flex justify-content-center align-items-center" style={{minHeight:500}}>
           <Spinner name="ball-scale-multiple" color="white" />
             <label style={{ color: "white" }} className="ml-5 mb-0">

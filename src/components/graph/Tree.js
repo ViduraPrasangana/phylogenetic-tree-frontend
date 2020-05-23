@@ -203,7 +203,8 @@ export default class extends React.Component {
             }}
           </Tree>
         </svg>
-        <Card small style={{ width: width }} className="my-4">
+       {
+        !this.props.noToolBox  &&  <Card small style={{ width: width }} className="my-4">
           <CardHeader className="">
             <h6 className="m-0">ToolBox</h6>
           </CardHeader>
@@ -429,6 +430,7 @@ export default class extends React.Component {
             </Row>
           </CardBody>
         </Card>
+       }
       </div>
     );
   }

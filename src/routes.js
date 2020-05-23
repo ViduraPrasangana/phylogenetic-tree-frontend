@@ -22,6 +22,7 @@ import Matrix from "./views/Matrix"
 import GettingStarted from "./views/GettingStarted";
 import PastVis from "./views/PastVis";
 import MyDNAs from "./views/MyDNAs";
+import ModifyGraph from "./views/ModifyGraph";
 
 // import Tickets from "./views/Customer/Tickets";
 // import MyBookings from "./views/Customer/Bookings";
@@ -54,6 +55,12 @@ export default [
     exact: true,
     layout: Main,
     component: GraphScreen,
+  },
+  {
+    path: "/modify-tree/:process_id",
+    exact: true,
+    layout: Main,
+    component: ModifyGraph,
   },{
     path: "/getting-started",
     exact: true,

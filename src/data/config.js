@@ -1,5 +1,5 @@
 const config = {
-    host_url:"https://phlyogenetic-tree.herokuapp.com/",
+    host_url:"http://34.67.62.120:8000/",
 }
 
 export default config

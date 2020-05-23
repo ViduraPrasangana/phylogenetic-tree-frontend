@@ -18,7 +18,6 @@ class MyDNAs extends Component {
     this.loadData();
   }
   loadData = () => {
-    console.log(Axios.defaults.headers);
     Axios.get(config.host_url + "dnaStorage/getFiles/")
       .then((res) => {
         this.setState({
@@ -52,10 +51,12 @@ class MyDNAs extends Component {
         startState:true,
         error:null
       })
-      const { title, selected } = this.state;
-      Axios.post(config.host_url + "cluster/lsh/matrix/generate/", {
+      const { title, selected,method } = this.state;
+      Axios.post(config.host_url + "cluster/matrix/generate/", {
         title,
         file_names: selected,
+        type:method,
+        is_default_user:false,
       })
         .then((res) => {
           this.setState({
@@ -100,8 +101,8 @@ class MyDNAs extends Component {
               </FormRadio>
               <div style={{ width: 20 }} />
               <FormRadio
-                checked={method === "K-MER"}
-                onClick={() => this.setState({ method: "K-MER" })}
+                checked={method === "KMER"}
+                onClick={() => this.setState({ method: "KMER" })}
               >
                 K-Mer method
               </FormRadio>
@@ -141,7 +142,7 @@ class MyDNAs extends Component {
                     const include = selected.includes(e.file_name)
                     return (
                       <tr key={i}>
-                        <td className="pl-4">{e.file_name+" ("+e.size+"MB)"}</td>
+                        <td className="pl-4">{e.file_name.split("_").join(" ")+" ("+e.size+"MB)"}</td>
                         <td>
                           <Button
                           outline={!include}
