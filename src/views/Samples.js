@@ -24,6 +24,7 @@ class Samples extends Component {
     error: null,
     method: null,
     startState: false,
+    search:null,
   };
 
   componentDidMount() {
@@ -96,6 +97,7 @@ class Samples extends Component {
       error,
       method,
       startState,
+      search,
     } = this.state;
 
     return (
@@ -112,7 +114,7 @@ class Samples extends Component {
         >
           <Col className="d-flex justify-content-end align-content-center text-semibold">
             <h5 className="mb-0 ">
-              Choose a title for Visualization
+            Title for Process
             </h5>
           </Col>
           <Col className="d-flex justify-content-start">
@@ -162,10 +164,22 @@ class Samples extends Component {
           </Button>
         </Row>
         <Row className="justify-content-center pt-4 pb-2 mx-4">
-          <Col className="col-12 col-lg-6">
+          <Col className="col-12 col-lg-7">
             <Card>
-              <CardHeader className="text-center h5 border-bottom text-black font-weight-bold">
-                Our samples
+              <CardHeader className="border-bottom text-black font-weight-bold ">
+               <Row className="justify-content-between pr-3">
+               Our samples
+                <FormInput
+              onChange={(e) =>
+                this.setState({
+                  search: e.target.value,
+                })
+              }
+              placeholder="Search here"
+              style={{ width: "30%", }}
+              value={search}
+            />
+               </Row>
               </CardHeader>
               <table className="table table-hover">
                 <thead>
@@ -180,6 +194,7 @@ class Samples extends Component {
                 </thead>
                 {allSamples.map((e, i) => {
                   const include = selected.includes(e.file_name);
+                  if(search!==null && !e.file_name.toLowerCase().includes(search)) return
                   return (
                     <tr key={i}>
                       <td className="pl-4">
@@ -211,7 +226,7 @@ class Samples extends Component {
               </table>
             </Card>
           </Col>
-          <Col>
+          <Col className="col-12 col-lg-5">
             <Card>
               <CardHeader className="text-center h5 border-bottom text-black font-weight-bold">
                 Selected

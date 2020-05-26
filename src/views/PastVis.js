@@ -8,6 +8,7 @@ import {
   Col,
   CardHeader,
   CardBody,
+  FormInput,
 } from "shards-react";
 import Axios from "axios";
 import config from "../data/config";
@@ -16,10 +17,28 @@ class PastVis extends Component {
   state = {
     treeList: [],
     matrixList: [],
+    width: 0, height: 0,
+    searchMatrix:null,
+    searchTree:null,
   };
 
   componentDidMount() {
-    this.loadData();
+        this.loadData();
+    this.updateWindowDimensions();
+    window.addEventListener("resize", this.updateWindowDimensions);
+  }
+
+
+  componentWillUnmount=()=> {
+    window.removeEventListener("resize", this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions() {
+    this.setState({
+      width: window.innerWidth,
+      height: window.innerHeight,
+      small: window.innerWidth < 992,
+    });
   }
   loadData = () => {
     console.log(Axios.defaults.headers);
@@ -36,23 +55,35 @@ class PastVis extends Component {
       });
   };
   render() {
-    const { treeList, matrixList } = this.state;
+    const { treeList, matrixList,width,height,searchMatrix,searchTree } = this.state;
     return (
       <Container
         fluid
         className="overflow-scroll pb-4 change-scroll"
-        style={{ height: "100%" }}
+        
       >
         <Row className="justify-content-center p-5 ">
           <Col className="col-12 col-lg-6">
-            <Card>
-              <CardHeader className="text-center h5 border-bottom text-black font-weight-bold">
+            <Card style={{height:height*0.8}}>
+              <CardHeader className="border-bottom text-black font-weight-bold">
+              <Row className="justify-content-between pr-3">
                 Matrices
+                <FormInput
+              onChange={(e) =>
+                this.setState({
+                  searchMatrix: e.target.value,
+                })
+              }
+              placeholder="Search here"
+              style={{ width: "30%", }}
+              value={searchMatrix}
+            />
+            </Row>
               </CardHeader>
-              <table className="table">
+              <table className="table table-responsive  change-scroll"  >
                 <thead>
                   <tr>
-                    <th scope="col" className="border-0 text-center">
+                    <th scope="col" style={{width:"100%"}} className="border-0 text-center">
                       Title
                     </th>
                     <th scope="col" className="border-0 text-center">
@@ -61,17 +92,18 @@ class PastVis extends Component {
                     <th scope="col" className="border-0 text-center">
                       Status
                     </th>
-                    <th scope="col" className="border-0 text-center">Open</th>
+                    <th scope="col" className="border-0 text-center pr-4">Open</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody >
                   {matrixList.map((e, i) => {
+                    if(searchMatrix!==null && !e.title.toLowerCase().includes(searchMatrix)) return
                     return (
                       <tr key={i}>
                         <td className="pl-4 text-center">{e.title}</td>
                         <td className="pl-4 text-center">{e.type}</td>
                         <td className="pl-4 text-center">{e.status}</td>
-                        <td className="pl-4 text-center">
+                        <td className="pl-4 text-center pr-4">
                           <Button
                             onClick={() => {
                               this.props.history.push(
@@ -91,14 +123,27 @@ class PastVis extends Component {
             </Card>
           </Col>
           <Col className="col-12 col-lg-6">
-            <Card>
-              <CardHeader className="text-center h5 border-bottom text-black font-weight-bold">
+            <Card style={{height:height*0.8}}>
+              <CardHeader className="border-bottom text-black font-weight-bold">
+                
+                <Row className="justify-content-between pr-3">
                 Tree Visualizations
+                <FormInput
+              onChange={(e) =>
+                this.setState({
+                  searchTree: e.target.value,
+                })
+              }
+              placeholder="Search here"
+              style={{ width: "30%", }}
+              value={searchTree}
+            />
+            </Row>
               </CardHeader>
-              <table className="table">
+              <table className="table table-responsive  change-scroll" >
                 <thead>
                   <tr>
-                    <th scope="col" className="border-0 text-center">
+                    <th scope="col" className="border-0 text-center" style={{width:"100%"}}>
                       Title
                     </th>
                     <th scope="col" className="border-0 text-center">
@@ -107,20 +152,21 @@ class PastVis extends Component {
                     <th scope="col" className="border-0 text-center">
                       Status
                     </th>
-                    <th scope="col" className="border-0 text-center">Open</th>
-                    <th scope="col" className="border-0 text-center">
+                    <th scope="col" className="border-0 text-center  pr-4">Open</th>
+                    {/* <th scope="col" className="border-0 text-center">
                       Add Specie
-                    </th>
+                    </th> */}
                   </tr>
                 </thead>
                 <tbody>
                   {treeList.map((e, i) => {
+                    if(searchTree!==null && !e.title.toLowerCase().includes(searchTree)) return
                     return (
                       <tr key={i}>
                         <td className="pl-4 text-center">{e.title}</td>
                         <td className="pl-4 text-center">{e.method}</td>
                         <td className="pl-4 text-center">{e.status}</td>
-                        <td className="pl-4 text-center">
+                        <td className="pl-4 text-center pr-4">
                           <Button
                             onClick={() => {
                               this.props.history.push("/tree/" + e.process_id);
@@ -130,7 +176,7 @@ class PastVis extends Component {
                             Open
                           </Button>
                         </td>
-                        <td className="pl-4 text-center">
+                        {/* <td className="pl-4 text-center">
                           {e.method === "KMER" && (
                             <Button
                               onClick={() => {
@@ -143,7 +189,7 @@ class PastVis extends Component {
                               Add specie
                             </Button>
                           )}
-                        </td>
+                        </td> */}
                       </tr>
                     );
                   })}
