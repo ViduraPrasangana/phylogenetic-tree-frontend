@@ -8,7 +8,7 @@ import {
   NavLink,
   Row,
   ButtonGroup,
-  Button
+  Button,
 } from "shards-react";
 import Logout from "../layout/MainNavbar/NavbarNav/Logout";
 import TopBarNavItem from "./TopBarNavItem";
@@ -19,19 +19,26 @@ import LoginButton from "../LoginButton";
 import RegisterButton from "../RegisterButton";
 import PastVis from "../../views/PastVis";
 import MyDNAs from "../../views/MyDNAs";
+import Samples from "../../views/Samples";
 class MainNavBar extends Component {
   state = {
-    current: ""
+    current: "",
   };
 
-  selectMenu() {
+  selectMenu=() =>{
     const { current } = this.state;
     const { comp } = this.props;
-    if (comp.type != PastVis && comp.type != MyDNAs && current !== "") this.setState({ current: "" });
-    else if (comp.type == PastVis && current !== "/past-vis")
-      this.setState({ current: "/past-vis" });
-    else if (comp.type == MyDNAs && current !== "/my-dna-files")
+    if (comp.type != PastVis && comp.type != MyDNAs && comp.type != Samples && current !== ""){
+      this.setState({ current: "" });
+    }
+    else if (comp.type == PastVis && current !== "/past-vis"){
+      this.setState({ current: "/past-vis" });}
+    else if (comp.type == MyDNAs && current !== "/my-dna-files"){
       this.setState({ current: "/my-dna-files" });
+    }
+    else if (comp.type == Samples && current !== "/samples"){
+      this.setState({ current: "/samples" });
+    }
   }
   render() {
     const { current } = this.state;
@@ -43,34 +50,37 @@ class MainNavBar extends Component {
           type="light"
           style={{ backgroundColor: "#ffffff00" }}
         >
-         <NavbarBrand
-          className="m-0 p-0"
-          tag={Link} to="/"
-          style={{ lineHeight: "25px" }}
-        >
+          <NavbarBrand
+            className="m-0 p-0"
+            tag={Link}
+            to="/"
+            style={{ lineHeight: "25px" }}
+          >
             <div className="pl-5 align-items-center">
               <img
                 id="main-logo"
                 className="d-inline-block align-top mr-1"
-                style={{ maxWidth: "40px", paddingBottom:"10px"}}
+                style={{ maxWidth: "40px", paddingBottom: "10px" }}
                 src={require("../../assets/images/logo.png")}
                 alt="DNA logo"
               />
 
-              <h5 className="d-none d-md-inline ml-1 bold text-white"><b>Phylogentic Tree Visualizer</b></h5>
+              <h5 className="d-none d-md-inline ml-1 bold text-white">
+                <b>Phylogentic Tree Visualizer</b>
+              </h5>
             </div>
           </NavbarBrand>
           <NavItem>
             <ButtonGroup className="align-items-center">
-              {itemsRight.map(element => {
+              {itemsRight.map((element) => {
                 if (!this.props.user && element.protect) return;
                 return (
                   <TopBarNavItem
                     item={element}
                     current={current}
-                    onSelected={state => {
+                    onSelected={(state) => {
                       this.setState({
-                        current: state
+                        current: state,
                       });
                     }}
                   />
@@ -84,7 +94,11 @@ class MainNavBar extends Component {
                 <UserActions /> <Logout />
               </>
             )}
-            {!this.props.user && <><LoginButton /> <RegisterButton/></>}
+            {!this.props.user && (
+              <>
+                <LoginButton /> <RegisterButton />
+              </>
+            )}
           </NavItem>
         </Navbar>
       </div>
@@ -92,9 +106,9 @@ class MainNavBar extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.userReducer.user
+    user: state.userReducer.user,
   };
 };
 

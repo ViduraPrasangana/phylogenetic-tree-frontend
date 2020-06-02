@@ -33,7 +33,7 @@ class PastVis extends Component {
     window.removeEventListener("resize", this.updateWindowDimensions);
   }
 
-  updateWindowDimensions() {
+  updateWindowDimensions=()=> {
     this.setState({
       width: window.innerWidth,
       height: window.innerHeight,
@@ -74,6 +74,7 @@ class PastVis extends Component {
                   searchMatrix: e.target.value,
                 })
               }
+              id="search_matrix"
               placeholder="Search here"
               style={{ width: "30%", }}
               value={searchMatrix}
@@ -111,6 +112,7 @@ class PastVis extends Component {
                               );
                             }}
                             theme={"primary"}
+                            id={"open_"+i}
                           >
                             Open
                           </Button>
@@ -133,7 +135,9 @@ class PastVis extends Component {
                 this.setState({
                   searchTree: e.target.value,
                 })
+                
               }
+              id="search_tree"
               placeholder="Search here"
               style={{ width: "30%", }}
               value={searchTree}
@@ -172,6 +176,7 @@ class PastVis extends Component {
                               this.props.history.push("/tree/" + e.process_id);
                             }}
                             theme={"primary"}
+                            id={"open_tree_"+i}
                           >
                             Open
                           </Button>

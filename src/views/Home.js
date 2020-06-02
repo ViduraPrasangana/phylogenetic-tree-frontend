@@ -27,7 +27,7 @@ class Home extends Component {
   }
 
   handleClickSamples = ()=>{
-    this.props.history.push("\samples")
+    this.props.history.push("\my-data-tree")
   }
 
   handleGettingStarted=()=> {
@@ -66,6 +66,7 @@ class Home extends Component {
               className="m-1"
               style={{ width: "200px" }}
               onClick={this.handleGettingStarted}
+              id="get_started"
             >
               Get Started
             </Button>
@@ -77,8 +78,9 @@ class Home extends Component {
               className="m-1"
               style={{ width: "200px" }}
               onClick={this.handleClickSamples}
+              id="have_matrix"
             >
-              Try with samples
+              I have a matrix
             </Button>
           </Col>
         </Row>

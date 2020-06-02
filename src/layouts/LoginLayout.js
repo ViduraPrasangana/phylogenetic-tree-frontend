@@ -28,6 +28,7 @@ const LoginLayout = ({ children }) => {
                   theme={state === "login" ? "primary" : "white"}
                   style={{ width: 100 }}
                   to="login"
+                  id="to_login"
                 >
                   Sign in
                 </Button>
@@ -36,6 +37,7 @@ const LoginLayout = ({ children }) => {
                   theme={state === "register" ? "primary" : "white"}
                   style={{ width: 100 }}
                   to="register"
+                  id="to_register"
                 >
                   Register
                 </Button>

@@ -79,11 +79,11 @@ class GettingStarted extends Component {
       .then((res) => {
         file.uploaded = true;
         this.forceUpdate();
-        this.notifyDatabase(file, 1);
+        this.notifyDatabase(file, true);
       })
       .catch((err) => {
         console.log(err.response);
-        this.notifyDatabase(file, 0);
+        this.notifyDatabase(file, false);
       });
       Axios.defaults.headers["Authorization"] ="Token " +this.props.user.user.token
   }
@@ -222,6 +222,7 @@ class GettingStarted extends Component {
                           onClick={() => this.getUploadLink(element)}
                           disabled={uploaded || error}
                           theme={error ? "danger" : "primary"}
+                          id="upload_btn"
                         >
                           {uploaded && "Uploaded"}
                           {!uploaded && !error && "Upload"}
@@ -272,6 +273,7 @@ class GettingStarted extends Component {
         )}
         <Row className="d-flex justify-content-center">
           <Button
+          id="start_btn"
             theme="info"
             style={{ width: "60%", height: 50, fontSize: 20 }}
             onClick={this.startProcess}

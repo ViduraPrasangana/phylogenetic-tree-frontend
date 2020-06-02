@@ -62,9 +62,9 @@ function Node({ node, onClick, orientation, fontSize, color }) {
                 width={calcWidth}
                 y={-calcHeight / 2}
                 x={-width / 2}
-                fill={"#272b4d"}
+                fill={"#ffffff"}
                 transform={`translate(${dx}, ${dy})`}
-                stroke={node.data.children ? "#03c0dc" : "#26deb0"}
+                stroke={node.data.children ? "#03c0dc" : "#ffffff"}
                 strokeWidth={1}
                 strokeDasharray={!node.data.children ? "2,2" : "0"}
                 strokeOpacity={!node.data.children ? 0.6 : 1}
@@ -89,7 +89,7 @@ function Node({ node, onClick, orientation, fontSize, color }) {
               textAnchor={"middle"}
               style={{ pointerEvents: "none", userSelect: "none" }}
               x={calcWidth / 2 - width / 2}
-              fill={node.data.children ? "white" : "#26deb0"}
+              fill={node.data.children ? "white" : "#0a5a01"}
               transform={`translate(${dx}, ${dy})`}
               onClick={e=>{
                 if (color) e.target.setAttribute("fill", color);

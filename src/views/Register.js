@@ -124,7 +124,7 @@ class Register extends Component {
                     this.setState({ username: e.target.value });
                   }}
                   invalid={validUsername || fieldError?.username}
-                  style={quarterTrans}
+                  style={{...quarterTrans,fontWeight:500}}
                 />
                 <FormFeedback invalid>
                   {validUsername?.props?.children}
@@ -141,7 +141,7 @@ class Register extends Component {
                     this.setState({ firstName: e.target.value });
                   }}
                   invalid={validFirstName || fieldError?.first_name}
-                  style={quarterTrans}
+                  style={{...quarterTrans,fontWeight:500}}
                 />
                 <FormFeedback invalid>
                   {validFirstName?.props?.children}
@@ -156,7 +156,7 @@ class Register extends Component {
                     this.setState({ lastName: e.target.value });
                   }}
                   invalid={validLastName || fieldError?.last_name}
-                  style={quarterTrans}
+                  style={{...quarterTrans,fontWeight:500}}
                 />
                 <FormFeedback invalid>
                   {validLastName?.props?.children}
@@ -166,8 +166,8 @@ class Register extends Component {
             </Row>
             <Row form className="form-group">
               <InputGroup>
-                <InputGroupAddon type="prepend" style={quarterTrans}>
-                  <InputGroupText>@</InputGroupText>
+                <InputGroupAddon type="prepend" style={{...quarterTrans,fontWeight:500}}>
+                  <InputGroupText style={{...quarterTrans,fontWeight:500}}>@</InputGroupText>
                 </InputGroupAddon>
                 <FormInput
                   id="email"
@@ -176,7 +176,7 @@ class Register extends Component {
                     this.setState({ email: e.target.value });
                   }}
                   invalid={validEmail || fieldError?.email}
-                  style={quarterTrans}
+                  style={{...quarterTrans,fontWeight:500}}
                 />
                 <FormFeedback invalid>
                   {validEmail?.props?.children}
@@ -193,7 +193,7 @@ class Register extends Component {
                   this.setState({ password: e.target.value });
                 }}
                 invalid={validPassword || fieldError?.password}
-                style={quarterTrans}
+                style={{...quarterTrans,fontWeight:500}}
               />
               <FormFeedback invalid>
                 {validPassword?.props?.children}
@@ -208,7 +208,7 @@ class Register extends Component {
                 onChange={(e) => {
                   this.setState({ confirmPassword: e.target.value });
                 }}
-                style={quarterTrans}
+                style={{...quarterTrans,fontWeight:500}}
                 invalid={confirmPassword !== null && !passEquals}
               />
               <FormFeedback invalid>
@@ -235,6 +235,7 @@ class Register extends Component {
                 onClick={() => {
                   this.submit();
                 }}
+                id="register_btn"
               >
                 Register
               </Button>

@@ -77,6 +77,7 @@ class Login extends Component {
                 theme="primary"
                 className="mb-3"
                 onClick={() => this.login()}
+                id ="login_btn"
               >
                 Login
               </Button>

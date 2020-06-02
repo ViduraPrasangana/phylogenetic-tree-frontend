@@ -124,6 +124,7 @@ class Samples extends Component {
                   title: e.target.value,
                 })
               }
+              id="title"
               style={{ width: "80%" }}
               value={title}
             />
@@ -133,11 +134,13 @@ class Samples extends Component {
               <FormRadio
                 checked={method === "LSH"}
                 onClick={() => this.setState({ method: "LSH" })}
+                id="lsh"
               >
                 LHS method
               </FormRadio>
               <div style={{ width: 20 }} />
               <FormRadio
+               id="kmer"
                 checked={method === "KMER"}
                 onClick={() => this.setState({ method: "KMER" })}
               >
@@ -157,6 +160,7 @@ class Samples extends Component {
         <Row className="d-flex justify-content-center">
           <Button
             theme="info"
+            id="start_btn"
             style={{ width: "60%", height: 50, fontSize: 20 }}
             onClick={this.startProcess}
           >
@@ -175,6 +179,7 @@ class Samples extends Component {
                   search: e.target.value,
                 })
               }
+              id="search"
               placeholder="Search here"
               style={{ width: "30%", }}
               value={search}
@@ -215,6 +220,7 @@ class Samples extends Component {
                           style={{
                             width: 100,
                           }}
+                          id={"select_"+i}
                           theme={include ? "primary" : "secondary"}
                         >
                           {include ? "Selected" : "Select"}

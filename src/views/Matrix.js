@@ -267,6 +267,7 @@ class Matrix extends Component {
                 data={this.getCSVData()}
                 filename={process.title + " - " + process.method + ".csv"}
                 style={{ color: "white" }}
+                id="download"
               >
                 Download Data as CSV
               </CSVLink>
@@ -277,6 +278,7 @@ class Matrix extends Component {
           <Row className="d-flex justify-content-center mt-3">
             <Button
               theme="info"
+              id="start_btn"
               style={{ width: "60%", height: 50, fontSize: 20 }}
               onClick={this.startProcess}
             >

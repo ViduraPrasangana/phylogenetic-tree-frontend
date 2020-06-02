@@ -23,6 +23,7 @@ import GettingStarted from "./views/GettingStarted";
 import PastVis from "./views/PastVis";
 import MyDNAs from "./views/MyDNAs";
 import ModifyGraph from "./views/ModifyGraph";
+import MyDataTree from "./views/MyDataTree";
 
 // import Tickets from "./views/Customer/Tickets";
 // import MyBookings from "./views/Customer/Bookings";
@@ -84,6 +85,12 @@ export default [
     exact: true,
     layout: Main,
     component: Samples,
+  },
+  {
+    path: "/my-data-tree",
+    exact: true,
+    layout: Main,
+    component: MyDataTree,
   },
   {
     path: "/matrix/:process_id",

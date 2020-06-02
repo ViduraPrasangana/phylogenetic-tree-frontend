@@ -64,10 +64,10 @@ export default class extends React.Component {
     linkHeightPercentage: 1,
     data: {},
     fontSize: 14,
-    linkThick: 1,
+    linkThick: 5,
     linkGap: 1,
     linkColor: null,
-    backgroundColor: "#272b4d"
+    backgroundColor: "#CCCCCC"
   };
   constructor(props) {
     super(props);

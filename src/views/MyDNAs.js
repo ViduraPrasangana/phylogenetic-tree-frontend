@@ -98,6 +98,7 @@ class MyDNAs extends Component {
                   title: e.target.value,
                 })
               }
+              id="title"
               style={{ width: "80%" }}
               value={title}
             />
@@ -107,11 +108,13 @@ class MyDNAs extends Component {
               <FormRadio
                 checked={method === "LSH"}
                 onClick={() => this.setState({ method: "LSH" })}
+                id="lsh"
               >
                 LHS method
               </FormRadio>
               <div style={{ width: 20 }} />
               <FormRadio
+              id="kmer"
                 checked={method === "KMER"}
                 onClick={() => this.setState({ method: "KMER" })}
               >
@@ -133,6 +136,7 @@ class MyDNAs extends Component {
             theme="info"
             style={{ width: "60%", height: 50, fontSize: 20 }}
             onClick={this.startProcess}
+            id="start_btn"
           >
             {startState?"Starting process":"Generate Distance Matrix"}
           </Button>
@@ -173,6 +177,7 @@ class MyDNAs extends Component {
                             else selected.push(e.file_name);
                             this.setState({ selected });
                           }}
+                          id={"select_"+i}
                           style={{
                             width: 100,
                           }}

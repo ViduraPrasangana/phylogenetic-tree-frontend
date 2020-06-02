@@ -12,8 +12,15 @@
     htmlBefore: '<i class="fas fa-users"></i>',
     htmlAfter: "",
     protect:true
-  }]
-
+  },
+  {
+    title: "Try with samples",
+    to: "/samples",
+    htmlBefore: '<i class="fas fa-users"></i>',
+    htmlAfter: "",
+    protect:true
+  },
+]
   const itemsLeft = [
     {
       title: "Search flights",
