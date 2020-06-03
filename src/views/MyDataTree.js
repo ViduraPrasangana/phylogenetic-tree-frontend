@@ -52,41 +52,28 @@ class MyDataTree extends Component {
       });
   };
 
-  validate = () => {
-    const { selected, title, method } = this.state;
-    if (selected.length > 0 && title && title.length > 0 && method) {
-      this.setState({
-        error: null,
-      });
-      return true;
-    } else {
-      this.setState({
-        error: "Fill all sections",
-      });
-      return false;
-    }
-  };
-
   startProcess = () => {
-    if (this.validate()) {
+    var i = this.state.fileText;
+    console.log(i);
+    if (this.validateCsv(i)) {
       this.setState({
         startState: true,
         error: null,
       });
       const { method } = this.state;
-      Axios.post(config.host_url + "cluster/matrix/generate/", {
-        // title,
-        // file_names: selected,
-        // is_default_user: true,
-        // type: method,
-      })
+      var data = this.extractData();
+      Axios.post(
+        method === "Matrix"
+          ? "http://phylogenetic-tree-api.herokuapp.com/api/get_tree_from_distance_matrix/"
+          : "http://phylogenetic-tree-api.herokuapp.com/api/get_tree_from_similarities/",
+        data
+      )
         .then((res) => {
           this.setState({
             startState: false,
             error: null,
           });
-          this.props.history.push("/matrix/" + res.data.process.process_id);
-          console.log(res);
+          console.log(res.data);
         })
         .catch((err) => {
           this.setState({
@@ -117,53 +104,100 @@ class MyDataTree extends Component {
     }
   };
 
+  extractData = () => {
+    const { method, fileText } = this.state;
+    if (fileText) {
+      if (method === "Similarities") {
+        return { similarities: fileText };
+      } else if (method === "Matrix") {
+        var spieces = [];
+        var distance_matrix = [];
+        fileText.forEach((element, i) => {
+          var r = element.trim().split(",");
+          if (i !== 0) {
+            spieces.push(r.splice(0, 1));
+            distance_matrix.push(r.map(Number));
+          }
+        });
+        return { spieces, distance_matrix };
+      }
+    }
+    return null;
+  };
   validateCsv = (fileText) => {
     var state = true;
+    var error = "";
     const { method } = this.state;
     if (fileText) {
       if (method === "Similarities") {
         if (!isSquare(8 * fileText.length + 1)) {
           state = false;
+          error = "7";
         }
         fileText.forEach((element) => {
           var row = element.trim().split(",");
           if (row.length !== 3) {
             state = false;
+            error = "6";
             return;
           }
-          if (!isNaN(row[0])) state = false;
-          if (!isNaN(row[1])) state = false;
-          if (isNaN(row[2])) state = false;
+          if (!isNaN(row[0])) {
+            state = false;
+            error = "1";
+          }
+          if (!isNaN(row[1])) {
+            state = false;
+            error = "2";
+          }
+          if (isNaN(row[2])) {
+            state = false;
+            error = "3";
+          }
           if (row[0] === row[1]) {
-            if (parseInt(row[2]) !== 1) state = false;
+            if (parseInt(row[2]) !== 1) {
+              state = false;
+              error = "4";
+            }
           } else {
-            if (parseFloat(row[2]) >= 1) state = false;
+            if (parseFloat(row[2]) >= 1) {
+              state = false;
+              error = "5";
+            }
           }
         });
       } else if (method === "Matrix") {
-        fileText.forEach((element,index) => {
+        fileText.forEach((element, index) => {
           var row = element.trim().split(",");
-          if(index===0){
-            row.forEach((ele,i) => {
-              if(i!==0){
-                if(!isNaN(ele)){
-                  state = false
+          if (index === 0) {
+            row.forEach((ele, i) => {
+              if (i !== 0) {
+                if (!isNaN(ele)) {
+                  state = false;
+                  error = "8";
                 }
               }
             });
-          }else{
-            if(!isNaN(row[0])){
-              state = false
+          } else {
+            if (!isNaN(row[0])) {
+              state = false;
+              error = "9";
             }
-            row.forEach((ele,i) => {
-              if(i!==0){
-                if(isNaN(ele)){
-                  state= false
-                }else{
-                  if(index===i){
-                    if(parseInt(ele)!==1) state = false;
-                  }else{
-                    if(parseFloat(ele)>=1) state = false;
+            row.forEach((ele, i) => {
+              if (i !== 0) {
+                if (isNaN(ele)) {
+                  state = false;
+                  error = "10";
+                } else {
+                  if (index === i) {
+                    if (parseInt(ele) !== 1) {
+                      state = false;
+                      error = "11";
+                    }
+                  } else {
+                    if (parseFloat(ele) >= 1) {
+                      state = false;
+                      error = "12";
+                    }
                   }
                 }
               }
@@ -171,8 +205,10 @@ class MyDataTree extends Component {
           }
         });
       }
+      console.log(error);
       return state;
     }
+    console.log(error);
     return false;
   };
   render() {
@@ -188,17 +224,27 @@ class MyDataTree extends Component {
         <Row className="mt-3 d-flex justify-content-center">
           <ButtonGroup className="align-items-center" style={{ width: "60%" }}>
             <Button
-              onClick={() => this.setState({ inputMode: "Manually",
-              fileText:null,
-              file:null })}
+              onClick={() =>
+                this.setState({
+                  inputMode: "Manually",
+                  fileText: null,
+                  file: null,
+                  error: null,
+                })
+              }
               outline={inputMode !== "Manually"}
             >
               Manually Input
             </Button>
             <Button
-              onClick={() => this.setState({ inputMode: "CSV",
-              fileText:null,
-              file:null  })}
+              onClick={() =>
+                this.setState({
+                  inputMode: "CSV",
+                  fileText: null,
+                  file: null,
+                  error: null,
+                })
+              }
               outline={inputMode !== "CSV"}
             >
               Input via CSV file
@@ -214,18 +260,26 @@ class MyDataTree extends Component {
               <Row className="d-flex justify-content-center">
                 <FormRadio
                   checked={method === "Matrix"}
-                  onClick={() => this.setState({ method: "Matrix",
-              fileText:null,
-              file:null  })}
+                  onClick={() =>
+                    this.setState({
+                      method: "Matrix",
+                      fileText: null,
+                      file: null,
+                    })
+                  }
                 >
                   From Matrix CSV
                 </FormRadio>
                 <div style={{ width: 20 }} />
                 <FormRadio
                   checked={method === "Similarities"}
-                  onClick={() => this.setState({ method: "Similarities" ,
-              fileText:null,
-              file:null })}
+                  onClick={() =>
+                    this.setState({
+                      method: "Similarities",
+                      fileText: null,
+                      file: null,
+                    })
+                  }
                 >
                   From similarities CSV
                 </FormRadio>
@@ -266,9 +320,7 @@ class MyDataTree extends Component {
             accept=".csv"
           />
         </Row>
-        <Row className="justify-content-center pt-4 pb-2 mx-4">
-          <p>{fileText}</p>
-        </Row>
+        <Row className="justify-content-center pt-4 pb-2 mx-4"></Row>
       </Container>
     );
   }

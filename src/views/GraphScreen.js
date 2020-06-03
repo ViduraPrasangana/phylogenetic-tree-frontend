@@ -198,6 +198,7 @@ class GraphScreen extends Component {
                       </td>
                       <td>
                         <Button
+                        id={"specie_"+i}
                           outline={!include}
                           onClick={() => {
                             this.setState({ selected: e.file_name });
@@ -216,7 +217,7 @@ class GraphScreen extends Component {
               </tbody>
             </table>
 
-            <Row className="justify-content-end pr-5"> <Button style={{width:150}} onClick={this.startModifyProcess}>Modify</Button></Row>
+            <Row className="justify-content-end pr-5"> <Button id="update_btn" style={{width:150}} onClick={this.startModifyProcess}>Modify</Button></Row>
           </ModalBody>
         </Modal>
         {data && (
