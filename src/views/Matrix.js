@@ -208,7 +208,7 @@ class Matrix extends Component {
                             target={"#" + "a"+i}
                             toggle={() => this.toggle("a"+i)}
                           >
-                            {t}
+                            <h6>{t}</h6>
                           </Tooltip>
                         </>
                       );
@@ -234,7 +234,7 @@ class Matrix extends Component {
                           target={"#" + columns[i].replace(".","") + "2"}
                           toggle={() => this.toggle(columns[i].replace(".","") + "2")}
                         >
-                          {t}
+                          <h6>{t}</h6>
                         </Tooltip>
                         {e.map((ele, index) => {
                           {/* if(index < i) return   <td  style={{ width: mxwdth }}>
