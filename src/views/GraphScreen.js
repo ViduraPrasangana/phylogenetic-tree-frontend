@@ -228,6 +228,7 @@ class GraphScreen extends Component {
             {
               method==="KMER" && 
               <Button
+              id="add_specie"
               className="ml-3"
               style={{ width: 200 }}
               onClick={this.toggle}

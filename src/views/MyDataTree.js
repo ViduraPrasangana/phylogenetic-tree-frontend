@@ -34,6 +34,8 @@ class MyDataTree extends Component {
     file: null,
     fileText: null,
     inputMode: null,
+    manual_numberOsSpecie: null,
+    manual_species: [],
   };
 
   componentDidMount() {
@@ -212,7 +214,16 @@ class MyDataTree extends Component {
     return false;
   };
   render() {
-    const { error, method, startState, file, fileText, inputMode } = this.state;
+    const {
+      error,
+      method,
+      startState,
+      file,
+      fileText,
+      inputMode,
+      manual_numberOsSpecie,
+      manual_species,
+    } = this.state;
 
     this.read();
     return (
@@ -284,6 +295,55 @@ class MyDataTree extends Component {
                   From similarities CSV
                 </FormRadio>
               </Row>
+            </Card>
+          )}
+
+          {inputMode === "Manually" && (
+            <Card className="p-2 mb-3 mt-3" style={{ width: "60%" }}>
+              <Row className="mb-3  d-flex justify-content-center">
+                <Col className="d-flex justify-content-end align-content-center text-semibold">
+                  <h5 className="mb-0 ">Number of Species</h5>
+                </Col>
+                <Col className="d-flex justify-content-start">
+                  <FormInput
+                    onChange={(e) =>{
+                      for(var i = manual_species.length; i!==e.target.value+1; i++){
+                        manual_species.push(null)
+                      }
+                      
+                      this.setState({
+                        manual_species
+                      })
+                    }}
+                    id="title"
+                    style={{ width: "80%" }}
+                    value={manual_species.length}
+                  />
+                </Col>
+              </Row>
+              {manual_species.map((ele, i) => {
+                return (
+                  <Row className="d-flex justify-content-center">
+                    <Col className="d-flex justify-content-end align-content-center text-semibold">
+                      <h5 className="mb-0 ">Specie {i+1}</h5>
+                    </Col>
+                    <Col className="d-flex justify-content-start">
+                      <FormInput
+                        onChange={(e) =>{
+                          ele = e
+                          this.setState({
+                            manual_species,
+                          })
+                        }
+                        }
+                        id={"specie_"+i}
+                        style={{ width: "80%" }}
+                        value={ele}
+                      />
+                    </Col>
+                  </Row>
+                );
+              })}
             </Card>
           )}
         </Row>
