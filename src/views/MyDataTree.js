@@ -17,6 +17,10 @@ import { halfTrans, fullTrans } from "../data/constants";
 import { connect } from "react-redux";
 import Axios from "axios";
 import config from "../data/config";
+import Tree from "../components/graph/Tree";
+import { addNamesToTree } from "../data/constants";
+import Spinner from "react-spinkit";
+
 
 function isSquare(n) {
   for (var i = 0; i < n / 2 + 2; i++) {
@@ -39,11 +43,13 @@ class MyDataTree extends Component {
     manual_showMatrix: false,
     manual_matrix: [],
     tooltipOpen: null,
+    tree:null,
+    width:null,
+    height:null,
   };
 
   componentDidMount() {
     this.updateWindowDimensions();
-    this.getSamples();
     window.addEventListener("resize", this.updateWindowDimensions);
   }
 
@@ -53,23 +59,11 @@ class MyDataTree extends Component {
 
   updateWindowDimensions = () => {
     this.setState({
-      width: window.innerWidth * 0.5,
+      width: window.innerWidth ,
       height: window.innerHeight,
     });
   };
 
-  getSamples = () => {
-    Axios.get(config.host_url + "dnaStorage/getDefaultFiles/")
-      .then((res) => {
-        this.setState({
-          allSamples: res.data.dna_files,
-        });
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   startProcess = () => {
     var i = this.state.fileText;
@@ -91,6 +85,7 @@ class MyDataTree extends Component {
           this.setState({
             startState: false,
             error: null,
+            tree:addNamesToTree(res.data.tree, 1, 1)
           });
           console.log(res.data);
         })
@@ -103,7 +98,60 @@ class MyDataTree extends Component {
         });
     }
   };
+  startManualProcess = () => {
+    const { manual_species, manual_matrix } = this.state;
+    if (this.validateMatrix()) {
+      var distance_matrix =[]
+      manual_matrix.forEach(element => {
+        distance_matrix.push(element.map(Number))
+      });
+      console.log({
+        spieces:manual_species,
+        distance_matrix
+      })
+      this.setState({
+        startState: true,
+        error: null,
+      });
+      Axios.post(
+        "http://phylogenetic-tree-api.herokuapp.com/api/get_tree_from_distance_matrix/",
+        {
+          spieces:manual_species,
+          distance_matrix
+        }
+      )
+        .then((res) => {
+          this.setState({
+            startState: false,
+            error: null,
+            tree:addNamesToTree(res.data.tree, 1, 1)
+          });
 
+          console.log(res.data);
+        })
+        .catch((err) => {
+          this.setState({
+            error: "Something went wrong",
+            startState: false,
+          });
+          console.log(err);
+        });
+    }else{
+      this.setState({
+        error:"Invalid matrix values"
+      })
+    }
+  };
+  validateMatrix = () => {
+    const { manual_matrix } = this.state
+    for(var i = 0;i<manual_matrix.length;i++){
+      for(var j = 0;j<manual_matrix[i].length;j++){
+         if(isNaN(manual_matrix[i][j])) return false
+         if(parseFloat(manual_matrix[i][j])>1) return false
+      }
+    }
+    return true
+  };
   chooseFile = () => {
     this.file.click();
   };
@@ -261,17 +309,31 @@ class MyDataTree extends Component {
       manual_matrix,
       width,
       tooltipOpen,
+      tree,
+      height
     } = this.state;
 
     this.read();
-    const mxwdth = manual_species ? width / (manual_species.length * 2) : 0;
+    const mxwdth = manual_species ? (width*0.5) / (manual_species.length * 2) : 0;
     return (
       <Container
         fluid
         className="overflow-scroll pb-4 change-scroll"
         style={{ height: "100%" }}
       >
-        <Row className="mt-3 d-flex justify-content-center">
+      {startState &&
+        <Row
+              className="d-flex justify-content-center align-items-center"
+              style={{ minHeight: 500 }}
+            >
+              <Spinner name="ball-scale-multiple" color="white" />
+              <label style={{ color: "white" }} className="ml-5 mb-0">
+                Generating visualization
+                  
+              </label>
+            </Row>
+      }
+      { !tree && !startState &&  <Row className="my-3 d-flex justify-content-center">
           <ButtonGroup className="align-items-center" style={{ width: "60%" }}>
             <Button
               onClick={() =>
@@ -300,8 +362,9 @@ class MyDataTree extends Component {
               Input via CSV file
             </Button>
           </ButtonGroup>
-        </Row>
-        <Row className="d-flex justify-content-center">
+        </Row>}
+       
+       {!tree &&  !startState &&<Row className="d-flex justify-content-center">
           {inputMode === "CSV" && (
             <Card className="p-2 mb-3 mt-3" style={{ width: "60%" }}>
               <Row className="mb-3  d-flex justify-content-center">
@@ -395,8 +458,8 @@ class MyDataTree extends Component {
               </Card>
             </>
           )}
-        </Row>
-        {inputMode === "Manually" && manual_showMatrix && (
+        </Row>}
+        {inputMode === "Manually" && manual_showMatrix &&  !tree && !startState &&(
           <>
             <Row className="d-flex justify-content-center mt-3">
               <table>
@@ -464,7 +527,7 @@ class MyDataTree extends Component {
                             return (
                               <td style={{ width: mxwdth }}>
                                 <Card>
-                                  <CardBody>{manual_matrix[index][i]}</CardBody>
+                                  <CardBody>{ele}</CardBody>
                                 </Card>
                               </td>
                             );
@@ -476,15 +539,20 @@ class MyDataTree extends Component {
                                     onChange={(e) => {
                                       // if (isNaN(e.target.value)) {
                                       //   manual_matrix[i][index] = 0;
-                                      // } else 
-                                      if (parseFloat(e.target.value)>=1) {
+                                      // } else
+                                      if (parseFloat(e.target.value) >= 1) {
                                         manual_matrix[i][index] = 1;
-                                      } else if (parseFloat(e.target.value)<0) {
+                                        manual_matrix[index][i] = 1;
+                                      } else if (
+                                        parseFloat(e.target.value) < 0
+                                      ) {
                                         manual_matrix[i][index] = 0;
+                                        manual_matrix[index][i] = 0;
                                       } else {
                                         manual_matrix[i][index] =
-                                          e.target.value
-                                        
+                                          e.target.value;
+                                          manual_matrix[index][i] =
+                                          e.target.value;
                                       }
                                       this.setState({
                                         manual_matrix,
@@ -507,26 +575,26 @@ class MyDataTree extends Component {
             </Row>
           </>
         )}
-        {inputMode === "Manually" && manual_showMatrix && (
-          <Row className="d-flex justify-content-center mt-3">
-            <Button
-              theme="info"
-              style={{ width: "60%", height: 50, fontSize: 20 }}
-              onClick={fileText ? this.startProcess : this.chooseFile}
-            >
-              {startState ? "Starting process" : "Visualize the tree"}
-            </Button>
-          </Row>
-        )}
 
         {error && (
-          <Row className="d-flex justify-content-center">
+          <Row className="d-flex justify-content-center mt-3">
             <Alert theme="danger" style={{ borderRadius: 5 }}>
               {error}
             </Alert>
           </Row>
         )}
-        {inputMode === "Manually" && !manual_showMatrix && (
+        {inputMode === "Manually" && manual_showMatrix &&  !tree && !startState &&(
+          <Row className="d-flex justify-content-center mt-3">
+            <Button
+              theme="info"
+              style={{ width: "60%", height: 50, fontSize: 20 }}
+              onClick={this.startManualProcess}
+            >
+              {startState ? "Starting process" : "Visualize the tree"}
+            </Button>
+          </Row>
+        )}
+        {inputMode === "Manually" && !manual_showMatrix &&  !tree && !startState &&(
           <Row className="d-flex justify-content-center">
             <Button
               theme="info"
@@ -563,7 +631,10 @@ class MyDataTree extends Component {
             </Button>
           </Row>
         )}
-        {inputMode === "CSV" && (
+        {tree && !startState &&<>
+          <Tree data={tree} width={width * 0.9} height={height * 0.7} />
+        </>}
+        {inputMode === "CSV" &&  !tree && !startState &&(
           <Row className="d-flex justify-content-center mt-3">
             <Button
               theme="info"
