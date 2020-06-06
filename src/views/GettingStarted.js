@@ -56,7 +56,7 @@ class GettingStarted extends Component {
         file.error = err.response?.data?.non_field_errors
           ? err.response.data.non_field_errors[0]
           : "Something went wrong";
-        if ("This file already exist!" === file.error) {
+        if ("This file already in the Storage." === file.error) {
           const { uploadedList } = this.state;
           uploadedList.push(file.name.substring(0, file.name.length - 4));
           this.setState({ uploadedList });

@@ -75,7 +75,7 @@ class Matrix extends Component {
           }
         })
         .catch((error) => {
-          console.log("thi is err", error);
+          console.log("thi is err", error.response);
           if (error.response && error.response.status === 400) {
             this.setState({
               status: "PROGRESS",

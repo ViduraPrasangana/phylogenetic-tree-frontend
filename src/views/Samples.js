@@ -199,7 +199,7 @@ class Samples extends Component {
                 </thead>
                 {allSamples.map((e, i) => {
                   const include = selected.includes(e.file_name);
-                  if(search!==null && !e.file_name.toLowerCase().includes(search)) return
+                  if(search!==null && !e.file_name.toLowerCase().includes(search?.toLowerCase())) return
                   return (
                     <tr key={i}>
                       <td className="pl-4">

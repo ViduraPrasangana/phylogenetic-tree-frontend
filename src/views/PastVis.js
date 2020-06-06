@@ -98,7 +98,7 @@ class PastVis extends Component {
                 </thead>
                 <tbody >
                   {matrixList.map((e, i) => {
-                    if(searchMatrix!==null && !e.title.toLowerCase().includes(searchMatrix)) return
+                    if(searchMatrix!==null && !e.title.toLowerCase().includes(searchMatrix?.toLowerCase())) return
                     return (
                       <tr key={i}>
                         <td className="pl-4 text-center">{e.title}</td>
@@ -164,7 +164,7 @@ class PastVis extends Component {
                 </thead>
                 <tbody>
                   {treeList.map((e, i) => {
-                    if(searchTree!==null && !e.title.toLowerCase().includes(searchTree)) return
+                    if(searchTree!==null && !e.title.toLowerCase().includes(searchTree?.toLowerCase())) return
                     return (
                       <tr key={i}>
                         <td className="pl-4 text-center">{e.title}</td>

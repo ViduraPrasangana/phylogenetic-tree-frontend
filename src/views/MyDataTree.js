@@ -12,6 +12,10 @@ import {
   Alert,
   ButtonGroup,
   Tooltip,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  FormSelect,
 } from "shards-react";
 import { halfTrans, fullTrans } from "../data/constants";
 import { connect } from "react-redux";
@@ -38,7 +42,7 @@ class MyDataTree extends Component {
     startState: false,
     file: null,
     fileText: null,
-    inputMode: null,
+    inputMode: "CSV",
     manual_species: [null, null, null],
     manual_showMatrix: false,
     manual_matrix: [],
@@ -408,6 +412,10 @@ class MyDataTree extends Component {
                     <h5 className="mb-0 ">Number of Species</h5>
                   </Col>
                   <Col className="d-flex justify-content-start">
+                  
+                  <FormSelect >
+                    
+                  </FormSelect>
                     <FormInput
                       onChange={(e) => {
                         if (manual_species.length < e.target.value) {
@@ -635,6 +643,21 @@ class MyDataTree extends Component {
           <Tree data={tree} width={width * 0.9} height={height * 0.7} />
         </>}
         {inputMode === "CSV" &&  !tree && !startState &&(
+          <>
+          <Row className="d-flex justify-content-center mt-3">
+         <Card>
+         <CardHeader className="text-center">
+           Sample {method} CSV
+         </CardHeader>
+        <CardBody>
+        <img
+              className=""
+              src={require("../assets/images/sample-"+method+".JPG")}
+              
+            />
+        </CardBody>
+         </Card>
+          </Row>
           <Row className="d-flex justify-content-center mt-3">
             <Button
               theme="info"
@@ -660,6 +683,7 @@ class MyDataTree extends Component {
               accept=".csv"
             />
           </Row>
+          </>
         )}
         <Row className="justify-content-center pt-4 pb-2 mx-4"></Row>
       </Container>
