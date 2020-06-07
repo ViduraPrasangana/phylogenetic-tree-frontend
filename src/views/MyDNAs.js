@@ -81,7 +81,7 @@ class MyDNAs extends Component {
     const { myDnaS, selected,title,method,startState,error } = this.state;
     return (
       <Container fluid className="overflow-scroll pb-4 change-scroll" style={{ height: "100%" }}>
-        <Row className="d-flex justify-content-center">
+        <Row className="d-flex justify-content-center  py-4 px-2 ">
           <Card className="p-2 mb-3" style={{ width: "60%" }}>
           <Row
           className="mb-3 pt-3 d-flex justify-content-center"
@@ -142,7 +142,7 @@ class MyDNAs extends Component {
           </Button>
         </Row>
         <Row className="justify-content-center pt-5 mx-4">
-          <Col className="col-12 col-lg-7">
+          <Col className="col-12 col-lg-7 mb-3">
             <Card>
               <CardHeader className="text-center h5 border-bottom text-black font-weight-bold">
                 My Species

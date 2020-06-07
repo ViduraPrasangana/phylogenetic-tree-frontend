@@ -62,8 +62,8 @@ class PastVis extends Component {
         className="overflow-scroll pb-4 change-scroll"
         
       >
-        <Row className="justify-content-center p-5 ">
-          <Col className="col-12 col-lg-6">
+        <Row className="justify-content-center py-4 px-2 ">
+          <Col className="col-12 col-lg-6 mb-3">
             <Card style={{height:height*0.8}}>
               <CardHeader className="border-bottom text-black font-weight-bold">
               <Row className="justify-content-between pr-3">

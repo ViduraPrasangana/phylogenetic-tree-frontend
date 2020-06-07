@@ -9,6 +9,8 @@ import {
   Row,
   ButtonGroup,
   Button,
+  Collapse,
+  NavbarToggler,
 } from "shards-react";
 import Logout from "../layout/MainNavbar/NavbarNav/Logout";
 import TopBarNavItem from "./TopBarNavItem";
@@ -23,6 +25,7 @@ import Samples from "../../views/Samples";
 class MainNavBar extends Component {
   state = {
     current: "",
+    isNavOpen:false,
   };
 
   selectMenu=() =>{
@@ -40,23 +43,30 @@ class MainNavBar extends Component {
       this.setState({ current: "/samples" });
     }
   }
+
+  toggleNav = () => {
+    this.setState({ isNavOpen: !this.state.isNavOpen })
+}
   render() {
     const { current } = this.state;
     this.selectMenu();
     return (
+      <>
       <div className="main-navbar">
         <Navbar
           className="align-content-between flex-md-nowrap p-0"
           type="light"
           style={{ backgroundColor: "#ffffff00" }}
         >
+
+          <NavItem className=" pl-5 col-6 col-md-4">
           <NavbarBrand
             className="m-0 p-0"
             tag={Link}
             to="/"
             style={{ lineHeight: "25px" }}
           >
-            <div className="pl-5 align-items-center">
+            <div className=" align-items-center">
               <img
                 id="main-logo"
                 className="d-inline-block align-top mr-1"
@@ -70,7 +80,10 @@ class MainNavBar extends Component {
               </h5>
             </div>
           </NavbarBrand>
-          <NavItem>
+          
+          </NavItem>
+        
+          <NavItem className="col-0 d-none d-lg-flex">
             <ButtonGroup className="align-items-center">
               {itemsRight.map((element) => {
                 if (!this.props.user && element.protect) return;
@@ -88,7 +101,7 @@ class MainNavBar extends Component {
               })}
             </ButtonGroup>
           </NavItem>
-          <NavItem>
+          <NavItem className="col-6 col-md-4 col-lg-4">
             {this.props.user && (
               <>
                 <UserActions /> <Logout />
@@ -100,8 +113,43 @@ class MainNavBar extends Component {
               </>
             )}
           </NavItem>
+        
         </Navbar>
+      
       </div>
+      <Row className="main-navbar d-flex d-lg-none justify-content-center my-3">
+        <Navbar
+          className="align-content-between flex-md-nowrap p-0"
+          type="light"
+          style={{ backgroundColor: "#ffffff00" }}
+        >
+
+         
+          <NavItem >
+            <ButtonGroup className="align-items-center">
+              {itemsRight.map((element) => {
+                if (!this.props.user && element.protect) return;
+                return (
+                  <TopBarNavItem
+                    item={element}
+                    current={current}
+                    onSelected={(state) => {
+                      this.setState({
+                        current: state,
+                      });
+                    }}
+                  />
+                );
+              })}
+            </ButtonGroup>
+          </NavItem>
+         
+        
+        </Navbar>
+      
+      </Row>
+     
+      </>
     );
   }
 }

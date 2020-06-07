@@ -41,6 +41,7 @@ class UserActions extends React.Component {
               className="user-avatar rounded-circle "
               src={require("../../../../assets/images/avatars/default-avatar-admin.png")}
               alt="User Avatar"
+              
             />
           </Col>
 

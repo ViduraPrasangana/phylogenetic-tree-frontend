@@ -28,7 +28,7 @@ class Login extends Component {
     const { user } = this.props;
     if (user.user) this.props.history.push("/");
     return (
-      <Card small className="mb-4 col-7" style={halfTrans}>
+      <Card small className="mb-4 col-12 col-md-7 col-lg-7" style={halfTrans}>
         <CardHeader className="border-bottom" style={fullTrans}>
           <h6 className="m-0">Login</h6>
         </CardHeader>

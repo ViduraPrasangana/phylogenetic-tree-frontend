@@ -295,7 +295,7 @@ class MyDataTree extends Component {
   };
   handleManualSpecie = (e, i) => {
     const { manual_species } = this.state;
-    manual_species[i] = e.target.value;
+    manual_species[i] = e.target.value.replace(" ","_");
     this.setState({
       manual_species,
     });
@@ -413,10 +413,36 @@ class MyDataTree extends Component {
                   </Col>
                   <Col className="d-flex justify-content-start">
                   
-                  <FormSelect >
-                    
+                  <FormSelect onChange={(e) => {
+                        if (manual_species.length < e.target.value) {
+                          for (
+                            var i = manual_species.length;
+                            i < e.target.value;
+                            i++
+                          ) {
+                            manual_species.push(null);
+                          }
+                        } else {
+                          for (
+                            var i = manual_species.length;
+                            i > e.target.value;
+                            i--
+                          ) {
+                            manual_species.pop();
+                          }
+                        }
+
+                        this.setState({
+                          manual_species,
+                        });
+                      }}>
+                  <option >3</option>
+                  <option >4</option>
+                  <option >5</option>
+                  <option >6</option>
+                  <option >7</option>            
                   </FormSelect>
-                    <FormInput
+                    {/* <FormInput
                       onChange={(e) => {
                         if (manual_species.length < e.target.value) {
                           for (
@@ -443,7 +469,7 @@ class MyDataTree extends Component {
                       id="title"
                       style={{ width: "80%" }}
                       value={manual_species.length}
-                    />
+                    /> */}
                   </Col>
                 </Row>
                 {manual_species.map((ele, i) => {
@@ -644,7 +670,7 @@ class MyDataTree extends Component {
         </>}
         {inputMode === "CSV" &&  !tree && !startState &&(
           <>
-          <Row className="d-flex justify-content-center mt-3">
+          <Row className="d-flex justify-content-center mt-3 mx-2">
          <Card>
          <CardHeader className="text-center">
            Sample {method} CSV
@@ -653,7 +679,7 @@ class MyDataTree extends Component {
         <img
               className=""
               src={require("../assets/images/sample-"+method+".JPG")}
-              
+              style={{width:"100%"}}
             />
         </CardBody>
          </Card>

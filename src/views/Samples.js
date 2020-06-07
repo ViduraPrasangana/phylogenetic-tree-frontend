@@ -107,7 +107,7 @@ class Samples extends Component {
         style={{ height: "100%" }}
       >
        
-        <Row className="d-flex justify-content-center">
+        <Row className="d-flex justify-content-center py-4 px-2">
           <Card className="p-2 mb-3" style={{ width: "60%" }}>
           <Row
           className="mb-3 pt-3 d-flex justify-content-center"
@@ -168,7 +168,7 @@ class Samples extends Component {
           </Button>
         </Row>
         <Row className="justify-content-center pt-4 pb-2 mx-4">
-          <Col className="col-12 col-lg-7">
+          <Col className="col-12 col-lg-7 mb-3">
             <Card>
               <CardHeader className="border-bottom text-black font-weight-bold ">
                <Row className="justify-content-between pr-3">

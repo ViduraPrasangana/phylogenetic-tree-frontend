@@ -109,7 +109,7 @@ class Register extends Component {
     const { user } = this.props;
     const fieldError = user.registerError?.response?.data;
     return (
-      <Card small className="mb-4 col-7" style={quarterTrans}>
+      <Card small className="mb-4  col-12 col-md-7 col-lg-7" style={quarterTrans}>
         <CardHeader className="border-bottom" style={fullTrans}>
           <h6 className="m-0">Register</h6>
         </CardHeader>
@@ -133,7 +133,7 @@ class Register extends Component {
               </Col>
             </Row>
             <Row form className="form-group">
-              <Col md className="pl-0">
+              <Col md className="pl-0 mb-2">
                 <FormInput
                   id="firstName"
                   placeholder="First Name"
@@ -148,7 +148,7 @@ class Register extends Component {
                   {fieldError?.first_name ? fieldError.first_name[0] : null}
                 </FormFeedback>
               </Col>
-              <Col md className="pr-0">
+              <Col md className="pr-0 ">
                 <FormInput
                   id="lastName"
                   placeholder="Last Name"

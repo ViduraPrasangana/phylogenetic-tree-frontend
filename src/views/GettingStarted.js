@@ -245,7 +245,7 @@ class GettingStarted extends Component {
           </Row>
         )}
         <Row className="d-flex justify-content-center">
-          <Card className="p-2 mb-3" style={{ width: "50%" }}>
+          <Card className="p-2 mb-3" style={{ width: "60%" }}>
             <Row className="d-flex justify-content-center">
               <FormRadio
                 checked={method === "LSH"}
