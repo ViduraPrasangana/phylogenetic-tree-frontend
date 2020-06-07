@@ -22,6 +22,7 @@ import RegisterButton from "../RegisterButton";
 import PastVis from "../../views/PastVis";
 import MyDNAs from "../../views/MyDNAs";
 import Samples from "../../views/Samples";
+import AddFiles from "../../views/AddFiles";
 class MainNavBar extends Component {
   state = {
     current: "",
@@ -31,13 +32,16 @@ class MainNavBar extends Component {
   selectMenu=() =>{
     const { current } = this.state;
     const { comp } = this.props;
-    if (comp.type != PastVis && comp.type != MyDNAs && comp.type != Samples && current !== ""){
+    if (comp.type != PastVis && comp.type != MyDNAs  && comp.type != AddFiles && comp.type != Samples && current !== ""){
       this.setState({ current: "" });
     }
     else if (comp.type == PastVis && current !== "/past-vis"){
       this.setState({ current: "/past-vis" });}
     else if (comp.type == MyDNAs && current !== "/my-dna-files"){
       this.setState({ current: "/my-dna-files" });
+    }
+     else if (comp.type == AddFiles && current !== "/add-dna"){
+      this.setState({ current: "/add-dna" });
     }
     else if (comp.type == Samples && current !== "/samples"){
       this.setState({ current: "/samples" });

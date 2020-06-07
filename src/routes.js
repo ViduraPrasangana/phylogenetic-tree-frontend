@@ -24,6 +24,7 @@ import PastVis from "./views/PastVis";
 import MyDNAs from "./views/MyDNAs";
 import ModifyGraph from "./views/ModifyGraph";
 import MyDataTree from "./views/MyDataTree";
+import AddFiles from "./views/AddFiles";
 
 // import Tickets from "./views/Customer/Tickets";
 // import MyBookings from "./views/Customer/Bookings";
@@ -85,6 +86,12 @@ export default [
     exact: true,
     layout: Main,
     component: Samples,
+  },
+  {
+    path: "/add-dna",
+    exact: true,
+    layout: Main,
+    component: AddFiles,
   },
   {
     path: "/my-data-tree",
