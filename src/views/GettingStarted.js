@@ -42,17 +42,17 @@ class GettingStarted extends Component {
           <Card style={{ width: "90%" }}>
             <CardBody>
               <Row>
-                <Col className="col-6">
+                <Col className="col-12 col-lg-6">
                   <YouTube
                     videoId="54zTM3yMrU0"
                     opts={{
-                      height: "480",
-                      width: "640",
+                      height: "450",
+                      width: "100%",
                     }}
                     onReady={this._onReady}
                   />
                 </Col>
-                <Col className="col-6">
+                <Col className="col-12 col-lg-6">
                   <ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
                     <ExpansionPanelSummary
                       expandIcon={<ExpandMoreIcon />}

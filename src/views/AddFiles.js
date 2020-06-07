@@ -244,33 +244,6 @@ class AddFiles extends Component {
             </Card>
           </Row>
         )}
-        {/* <Row className="d-flex justify-content-center">
-          <Card className="p-2 mb-3" style={{ width: "60%" }}>
-            <Row className="d-flex justify-content-center">
-              <FormRadio
-                checked={method === "LSH"}
-                onClick={() => this.setState({ method: "LSH" })}
-              >
-                LHS method
-              </FormRadio>
-              <div style={{ width: 20 }} />
-              <FormRadio
-                checked={method === "KMER"}
-                onClick={() => this.setState({ method: "KMER" })}
-              >
-                K-Mer method
-              </FormRadio>
-            </Row>
-          </Card>
-        </Row>
-
-        {error && (
-          <Row className="d-flex justify-content-center">
-            <Alert theme="danger" style={{ borderRadius: 5 }}>
-              {error}
-            </Alert>
-          </Row>
-        )}*/}
         <Row className="d-flex justify-content-center"> 
           <Button
           id="navigate_to_dnas"
