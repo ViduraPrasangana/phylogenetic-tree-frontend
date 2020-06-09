@@ -169,7 +169,7 @@ class PastVis extends Component {
                       <tr key={i}>
                         <td className="pl-4 text-center">{e.title}</td>
                         <td className="pl-4 text-center">{e.method}</td>
-                        <td className="pl-4 text-center">{e.status}</td>
+                        <td className="pl-4 text-center">{e.status===2?"SUCCESS":"PROGRESS"}</td>
                         <td className="pl-4 text-center pr-4">
                           <Button
                             onClick={() => {

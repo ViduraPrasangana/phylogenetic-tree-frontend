@@ -277,6 +277,11 @@ class MyDataTree extends Component {
         });
       }
       console.log(error);
+      if(state===false){
+        this.setState({error:"Data structure is invalid"})
+      }else{
+        this.setState({error:null})
+      }
       return state;
     }
     console.log(error);
