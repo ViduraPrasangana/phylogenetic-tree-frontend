@@ -44,7 +44,7 @@ class GettingStarted extends Component {
               <Row>
                 <Col className="col-12 col-lg-6">
                   <YouTube
-                    videoId="54zTM3yMrU0"
+                    videoId="2R1bQ5xy-SY"
                     opts={{
                       height: "450",
                       width: "100%",
